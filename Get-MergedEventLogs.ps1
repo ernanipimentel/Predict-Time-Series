@@ -1,157 +1,176 @@
+#Requires -Version 5.1
+
 <#
 .SYNOPSIS
-    Reads Application, Security, and System event logs, filters out
+    Reads Application, Security and System event logs, filters out
     Informational messages, and displays them in chronological order.
 
 .DESCRIPTION
-    Collects the most recent events from the Application, Security, and
-    System Windows Event Logs, excludes entries with level "Information"
-    (and "LogAlways"), merges them into a single collection, and sorts
-    the result by TimeCreated ascending.
+    Collects recent events from the Application, Security, and System
+    Windows Event Logs.  Only Critical, Error and Warning entries are
+    kept (Information and LogAlways are excluded).  The events are
+    merged into a single collection and sorted by TimeCreated ascending.
 
     Requires elevated privileges (Run as Administrator) to read the
     Security log.
 
 .PARAMETER MaxEvents
-    Maximum number of events to retrieve per log. Default is 200.
+    Maximum number of events to retrieve **per log**.  Default is 200.
+    Must be between 1 and 100 000.
 
 .PARAMETER After
     Only include events created after this date/time.
-    Default is 24 hours ago.
+    Default is 24 hours before the current time.
 
 .PARAMETER Before
     Only include events created before this date/time.
-    Default is now.
+    Default is the current time.
+
+.PARAMETER LogName
+    One or more event-log names to query.
+    Default is @('Application', 'Security', 'System').
 
 .PARAMETER ExportCsv
-    Optional file path. When provided the results are also exported to
-    a CSV file at the given path.
+    Optional file path.  When provided the full results are exported
+    to a CSV file at the given path.
+
+.PARAMETER ExportJson
+    Optional file path.  When provided the full results are exported
+    to a JSON file at the given path.
+
+.PARAMETER PassThru
+    When set the script emits structured [PSCustomObject] records to
+    the pipeline instead of rendering a Format-Table.  Useful for
+    piping into other commands.
 
 .EXAMPLE
     .\Get-MergedEventLogs.ps1
 
     Retrieves the last 200 non-informational events per log from the
-    past 24 hours.
+    past 24 hours and displays them as a table.
 
 .EXAMPLE
-    .\Get-MergedEventLogs.ps1 -MaxEvents 500 -After "2026-02-10" -ExportCsv "C:\Logs\merged.csv"
+    .\Get-MergedEventLogs.ps1 -MaxEvents 500 -After "2026-02-10" -ExportCsv C:\Logs\merged.csv
 
-    Retrieves up to 500 events per log since Feb 10 2026 and saves the
+    Retrieves up to 500 events per log since 10 Feb 2026 and saves the
     output to a CSV file.
+
+.EXAMPLE
+    .\Get-MergedEventLogs.ps1 -PassThru | Where-Object Level -eq 'Error'
+
+    Returns only Error-level events as objects for further processing.
+
+.EXAMPLE
+    .\Get-MergedEventLogs.ps1 -LogName System -ExportJson C:\Logs\system.json
+
+    Queries only the System log and exports results as JSON.
 #>
 
 [CmdletBinding()]
 param(
+    [ValidateRange(1, 100000)]
     [int]$MaxEvents = 200,
 
     [datetime]$After = (Get-Date).AddHours(-24),
 
     [datetime]$Before = (Get-Date),
 
-    [string]$ExportCsv
+    [ValidateNotNullOrEmpty()]
+    [string[]]$LogName = @('Application', 'Security', 'System'),
+
+    [string]$ExportCsv,
+
+    [string]$ExportJson,
+
+    [switch]$PassThru
 )
 
-# ── Privilege check ──────────────────────────────────────────────────
-$isAdmin = ([Security.Principal.WindowsPrincipal] `
-    [Security.Principal.WindowsIdentity]::GetCurrent()
-).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+Set-StrictMode -Version Latest
+$ErrorActionPreference = 'Stop'
 
-if (-not $isAdmin) {
+# ── Load helpers ─────────────────────────────────────────────────────
+. "$PSScriptRoot\EventLogHelpers.ps1"
+
+# ── Validate parameters ─────────────────────────────────────────────
+Assert-DateRange -After $After -Before $Before
+
+if ($ExportCsv) { Assert-ExportPath -Path $ExportCsv }
+if ($ExportJson) { Assert-ExportPath -Path $ExportJson }
+
+# ── Privilege check ──────────────────────────────────────────────────
+if (-not (Test-AdminPrivilege)) {
     Write-Warning ("Running without administrator privileges. " +
                    "The Security log may not be accessible.")
 }
 
-# ── Define the logs to query ─────────────────────────────────────────
-$logNames = @('Application', 'Security', 'System')
-
-# Levels to KEEP  (exclude Information = 4 and LogAlways = 0):
-#   Critical = 1, Error = 2, Warning = 3
-$levelsToKeep = @(1, 2, 3)
-
 # ── Collect events ───────────────────────────────────────────────────
-$allEvents = [System.Collections.Generic.List[object]]::new()
+$allEvents = [System.Collections.Generic.List[PSObject]]::new()
 
-foreach ($logName in $logNames) {
-    Write-Verbose "Querying $logName log..."
+foreach ($log in $LogName) {
+    Write-Verbose "Querying $log log..."
 
-    # Build an XPath filter for the date range and severity levels.
-    # Using XPath at the provider level is significantly faster than
-    # filtering with Where-Object after retrieval.
-    $levelConditions = ($levelsToKeep | ForEach-Object {
-        "Level=$_"
-    }) -join ' or '
-
-    $afterTicks = $After.ToUniversalTime().Ticks
-    $beforeTicks = $Before.ToUniversalTime().Ticks
-
-    # TimeCreated uses FILETIME (100-ns intervals since 1601-01-01).
-    # Convert .NET ticks (same epoch) directly.
-    $xpath = "*[System[($levelConditions) and " +
-             "TimeCreated[timediff(@SystemTime) <= " +
-             "$(([datetime]::UtcNow.Ticks - $afterTicks) / 10000)] and " +
-             "TimeCreated[timediff(@SystemTime) >= " +
-             "$(([datetime]::UtcNow.Ticks - $beforeTicks) / 10000)]]]"
+    $params = @{
+        LogName   = $log
+        After     = $After
+        Before    = $Before
+        MaxEvents = $MaxEvents
+    }
 
     try {
-        $events = Get-WinEvent -LogName $logName `
-                               -FilterXPath $xpath `
-                               -MaxEvents $MaxEvents `
-                               -ErrorAction Stop
+        $events = Get-FilteredEvents @params
 
         foreach ($evt in $events) {
             $allEvents.Add($evt)
         }
 
-        Write-Verbose "  -> Retrieved $($events.Count) events from $logName."
+        Write-Verbose "  -> Retrieved $($events.Count) events from $log."
     }
-    catch [System.Exception] {
+    catch {
         if ($_.Exception.Message -match 'No events were found') {
-            Write-Verbose "  -> No matching events in $logName."
+            Write-Verbose "  -> No matching events in $log."
         }
         else {
-            Write-Warning "Could not read $logName log: $($_.Exception.Message)"
+            Write-Warning "Could not read ${log} log: $($_.Exception.Message)"
         }
     }
 }
 
 if ($allEvents.Count -eq 0) {
     Write-Host "No non-informational events found in the specified time range."
-    return
+    exit 0
 }
 
-# ── Sort chronologically and format ──────────────────────────────────
+# ── Sort chronologically ────────────────────────────────────────────
 $sorted = $allEvents | Sort-Object -Property TimeCreated
 
-$formatted = $sorted | Select-Object `
-    @{Name = 'Time';    Expression = { $_.TimeCreated.ToString('yyyy-MM-dd HH:mm:ss') }},
-    @{Name = 'Level';   Expression = { $_.LevelDisplayName }},
-    @{Name = 'Log';     Expression = { $_.LogName }},
-    @{Name = 'Source';  Expression = { $_.ProviderName }},
-    @{Name = 'EventID'; Expression = { $_.Id }},
-    @{Name = 'Message'; Expression = {
-        # Trim the message to the first line for table readability.
-        ($_.Message -split "`n")[0].Trim()
-    }}
+# ── Build output records ─────────────────────────────────────────────
+$records = ConvertTo-EventRecord -Events $sorted
 
 # ── Output ───────────────────────────────────────────────────────────
-$formatted | Format-Table -AutoSize -Wrap
+if ($PassThru) {
+    $records
+}
+else {
+    $tableRecords = $records | Select-Object Time, Level, Log, Source, EventID,
+        @{Name = 'Message'; Expression = { ($_.Message -split "`n")[0].Trim() }}
 
-Write-Host "`nTotal events: $($sorted.Count)" -ForegroundColor Cyan
-Write-Host ("Time range : {0} - {1}" -f `
-    $After.ToString('yyyy-MM-dd HH:mm:ss'), `
-    $Before.ToString('yyyy-MM-dd HH:mm:ss')) -ForegroundColor Cyan
+    $tableRecords | Format-Table -AutoSize -Wrap
+
+    Write-Host "`nTotal events: $($sorted.Count)" -ForegroundColor Cyan
+    Write-Host ("Time range : {0} - {1}" -f `
+        $After.ToString('yyyy-MM-dd HH:mm:ss'),
+        $Before.ToString('yyyy-MM-dd HH:mm:ss')) -ForegroundColor Cyan
+}
 
 # ── Optional CSV export ──────────────────────────────────────────────
 if ($ExportCsv) {
-    # For the CSV include the full message, not the truncated one.
-    $csvData = $sorted | Select-Object `
-        @{Name = 'Time';    Expression = { $_.TimeCreated.ToString('yyyy-MM-dd HH:mm:ss') }},
-        @{Name = 'Level';   Expression = { $_.LevelDisplayName }},
-        @{Name = 'Log';     Expression = { $_.LogName }},
-        @{Name = 'Source';  Expression = { $_.ProviderName }},
-        @{Name = 'EventID'; Expression = { $_.Id }},
-        @{Name = 'Message'; Expression = { $_.Message }}
-
-    $csvData | Export-Csv -Path $ExportCsv -NoTypeInformation -Encoding UTF8
+    $records | Export-Csv -Path $ExportCsv -NoTypeInformation -Encoding UTF8
     Write-Host "Results exported to $ExportCsv" -ForegroundColor Green
+}
+
+# ── Optional JSON export ─────────────────────────────────────────────
+if ($ExportJson) {
+    $records | ConvertTo-Json -Depth 3 |
+        Set-Content -Path $ExportJson -Encoding UTF8
+    Write-Host "Results exported to $ExportJson" -ForegroundColor Green
 }
