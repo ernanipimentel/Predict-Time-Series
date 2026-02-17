@@ -14,6 +14,8 @@
     Requires elevated privileges (Run as Administrator) to read the
     Security log.
 
+    This is a self-contained script — no external files are required.
+
 .PARAMETER MaxEvents
     Maximum number of events to retrieve **per log**.  Default is 200.
     Must be between 1 and 100 000.
@@ -88,13 +90,144 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
-# ── Load helpers ─────────────────────────────────────────────────────
-. "$PSScriptRoot\EventLogHelpers.ps1"
+# ═════════════════════════════════════════════════════════════════════
+# Helper functions (inlined — no external file required)
+# ═════════════════════════════════════════════════════════════════════
+
+function Assert-DateRange {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory)][datetime]$After,
+        [Parameter(Mandatory)][datetime]$Before
+    )
+    if ($After -ge $Before) {
+        throw [System.ArgumentException]::new(
+            "The -After date ($($After.ToString('o'))) must be earlier " +
+            "than the -Before date ($($Before.ToString('o'))).")
+    }
+}
+
+function Assert-ExportPath {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory)][string]$Path
+    )
+    $parent = Split-Path -Path $Path -Parent
+    if ($parent -and -not (Test-Path -Path $parent -PathType Container)) {
+        throw [System.IO.DirectoryNotFoundException]::new(
+            "Export directory does not exist: $parent")
+    }
+}
+
+function Test-AdminPrivilege {
+    [CmdletBinding()]
+    [OutputType([bool])]
+    param()
+    try {
+        $identity  = [Security.Principal.WindowsIdentity]::GetCurrent()
+        $principal = [Security.Principal.WindowsPrincipal]$identity
+        return $principal.IsInRole(
+            [Security.Principal.WindowsBuiltInRole]::Administrator)
+    }
+    catch {
+        return $false
+    }
+}
+
+function Get-LevelName {
+    [CmdletBinding()]
+    [OutputType([string])]
+    param(
+        [Parameter(Mandatory)][int]$LevelValue
+    )
+    switch ($LevelValue) {
+        0 { return 'LogAlways' }
+        1 { return 'Critical' }
+        2 { return 'Error' }
+        3 { return 'Warning' }
+        4 { return 'Information' }
+        5 { return 'Verbose' }
+        default { return "Level-$LevelValue" }
+    }
+}
+
+function Build-EventXPathFilter {
+    [CmdletBinding()]
+    [OutputType([string])]
+    param(
+        [Parameter(Mandatory)][datetime]$After,
+        [Parameter(Mandatory)][datetime]$Before,
+        [int[]]$Levels = @(1, 2, 3)
+    )
+
+    $levelConditions = ($Levels | ForEach-Object { "Level=$_" }) -join ' or '
+
+    $nowTicks    = [datetime]::UtcNow.Ticks
+    $afterTicks  = $After.ToUniversalTime().Ticks
+    $beforeTicks = $Before.ToUniversalTime().Ticks
+
+    $afterMs  = [math]::Floor(($nowTicks - $afterTicks)  / 10000)
+    $beforeMs = [math]::Floor(($nowTicks - $beforeTicks) / 10000)
+
+    $xpath = "*[System[($levelConditions) and " +
+             "TimeCreated[timediff(@SystemTime) <= $afterMs] and " +
+             "TimeCreated[timediff(@SystemTime) >= $beforeMs]]]"
+
+    return $xpath
+}
+
+function Get-FilteredEvents {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory)][string]$LogName,
+        [Parameter(Mandatory)][datetime]$After,
+        [Parameter(Mandatory)][datetime]$Before,
+        [int]$MaxEvents = 200
+    )
+
+    $xpath = Build-EventXPathFilter -After $After -Before $Before
+
+    $events = Get-WinEvent -LogName $LogName `
+                           -FilterXPath $xpath `
+                           -MaxEvents $MaxEvents `
+                           -ErrorAction Stop
+
+    return @($events)
+}
+
+function ConvertTo-EventRecord {
+    [CmdletBinding()]
+    [OutputType([PSCustomObject[]])]
+    param(
+        [Parameter(Mandatory, ValueFromPipeline)]
+        [AllowEmptyCollection()]
+        [object[]]$Events
+    )
+    begin { $output = [System.Collections.Generic.List[PSCustomObject]]::new() }
+    process {
+        foreach ($evt in $Events) {
+            $output.Add([PSCustomObject]@{
+                Time    = $evt.TimeCreated.ToString('yyyy-MM-dd HH:mm:ss')
+                Level   = if ($evt.LevelDisplayName) { $evt.LevelDisplayName }
+                         else { Get-LevelName -LevelValue $evt.Level }
+                Log     = $evt.LogName
+                Source  = $evt.ProviderName
+                EventID = $evt.Id
+                Message = $evt.Message
+            })
+        }
+    }
+    end { return $output.ToArray() }
+}
+
+# ═════════════════════════════════════════════════════════════════════
+# Main script
+# ═════════════════════════════════════════════════════════════════════
 
 # ── Validate parameters ─────────────────────────────────────────────
 Assert-DateRange -After $After -Before $Before
 
-if ($ExportCsv) { Assert-ExportPath -Path $ExportCsv }
+if ($ExportCsv)  { Assert-ExportPath -Path $ExportCsv }
 if ($ExportJson) { Assert-ExportPath -Path $ExportJson }
 
 # ── Privilege check ──────────────────────────────────────────────────

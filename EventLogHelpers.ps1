@@ -2,11 +2,16 @@
 
 <#
 .SYNOPSIS
-    Helper functions for Get-MergedEventLogs.ps1.
+    Helper functions for Get-MergedEventLogs — used by the Pester tests.
 
 .DESCRIPTION
-    Contains the core logic extracted into individually-testable
-    functions.  Dot-sourced by the main script.
+    Contains the same helper functions that are inlined inside
+    Get-MergedEventLogs.ps1.  This standalone file exists so the
+    Pester test suite can dot-source individual functions without
+    executing the main script.
+
+    The main script is fully self-contained and does NOT depend on
+    this file at runtime.
 #>
 
 Set-StrictMode -Version Latest

@@ -14,7 +14,8 @@
 #>
 
 BeforeAll {
-    # Dot-source the helpers so every function is available in scope.
+    # Dot-source the standalone helpers file so every function is
+    # available in scope for individual testing.
     . "$PSScriptRoot\..\EventLogHelpers.ps1"
 
     # ── Mock-event factory ───────────────────────────────────────────
