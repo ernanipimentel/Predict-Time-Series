@@ -462,7 +462,60 @@ Describe 'Export functionality' {
 }
 
 # =====================================================================
-# 11. Edge cases
+# 11. Show-ScriptHelp
+# =====================================================================
+Describe 'Show-ScriptHelp' {
+
+    It 'Is a callable function' {
+        Get-Command Show-ScriptHelp -ErrorAction SilentlyContinue |
+            Should -Not -BeNullOrEmpty
+    }
+
+    It 'Outputs help text containing OBJECTIVE section' {
+        # Capture Write-Host output via -InformationAction and the
+        # 6>&1 redirection (works on both 5.1 and 7+).
+        $output = Show-ScriptHelp 6>&1 *>&1 | Out-String
+        $output | Should -Match 'OBJECTIVE'
+    }
+
+    It 'Outputs help text containing PRE-REQUISITES section' {
+        $output = Show-ScriptHelp 6>&1 *>&1 | Out-String
+        $output | Should -Match 'PRE-REQUISITES'
+    }
+
+    It 'Outputs help text containing PARAMETERS section' {
+        $output = Show-ScriptHelp 6>&1 *>&1 | Out-String
+        $output | Should -Match 'PARAMETERS'
+    }
+
+    It 'Outputs help text containing PARAMETER CONFLICTS section' {
+        $output = Show-ScriptHelp 6>&1 *>&1 | Out-String
+        $output | Should -Match 'PARAMETER CONFLICTS'
+    }
+
+    It 'Outputs help text containing EXAMPLES section' {
+        $output = Show-ScriptHelp 6>&1 *>&1 | Out-String
+        $output | Should -Match 'EXAMPLES'
+    }
+
+    It 'Mentions -MaxEvents parameter' {
+        $output = Show-ScriptHelp 6>&1 *>&1 | Out-String
+        $output | Should -Match 'MaxEvents'
+    }
+
+    It 'Mentions -PassThru parameter' {
+        $output = Show-ScriptHelp 6>&1 *>&1 | Out-String
+        $output | Should -Match 'PassThru'
+    }
+
+    It 'Mentions -Verbose parameter' {
+        $output = Show-ScriptHelp 6>&1 *>&1 | Out-String
+        $output | Should -Match 'Verbose'
+    }
+}
+
+# =====================================================================
+# 12. Edge cases
 # =====================================================================
 Describe 'Edge cases' {
 
