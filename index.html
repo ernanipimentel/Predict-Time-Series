@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Veronique Pimentel — Language Tutor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+/* === DESIGN TOKENS === */
+:root {
+  --primary:   #7B3F2B;
+  --secondary: #C8956C;
+  --accent:    #D4AF7A;
+  --bg:        #FAF6F1;
+  --bg2:       #F2EBE0;
+  --text:      #2C1A0E;
+  --text-light:#6B4E3D;
+  --white:     #FFFFFF;
+  --radius:    6px;
+  --shadow:    0 4px 24px rgba(123,63,43,0.10);
+  --transition:0.3s ease;
+  --max-w:     1200px;
+}
+
+/* === RESET === */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Lato',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+
+/* === TYPOGRAPHY === */
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;line-height:1.2;font-weight:600}
+h1{font-size:clamp(2.8rem,7vw,5.5rem)}
+h2{font-size:clamp(2rem,4vw,3rem)}
+h3{font-size:clamp(1.3rem,2.5vw,1.8rem)}
+p{font-size:1.05rem;color:var(--text-light)}
+
+/* === UTILITIES === */
+.container{width:90%;max-width:var(--max-w);margin:0 auto}
+.section-label{display:inline-block;font-family:'Lato',sans-serif;font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--secondary);margin-bottom:.75rem}
+.btn{display:inline-block;padding:.85rem 2.2rem;border-radius:var(--radius);font-family:'Lato',sans-serif;font-size:.95rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;transition:transform var(--transition),box-shadow var(--transition),background var(--transition)}
+.btn-primary{background:var(--primary);color:var(--white)}
+.btn-primary:hover{background:#5c2c1a;transform:translateY(-2px);box-shadow:0 8px 24px rgba(123,63,43,.3)}
+.btn-outline{background:transparent;color:var(--primary);border:2px solid var(--primary)}
+.btn-outline:hover{background:var(--primary);color:var(--white);transform:translateY(-2px)}
+.tag{display:inline-block;padding:.25rem .75rem;border-radius:20px;font-size:.78rem;font-weight:700;letter-spacing:.05em;background:var(--bg2);color:var(--primary);border:1px solid var(--secondary)}
+
+/* === SCROLL REVEAL === */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* === NAV === */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 0;transition:background var(--transition),box-shadow var(--transition)}
+nav.scrolled{background:rgba(250,246,241,.97);backdrop-filter:blur(8px);box-shadow:0 2px 20px rgba(0,0,0,.08)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;color:var(--primary);white-space:nowrap}
+.nav-logo span{color:var(--secondary)}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{font-size:.875rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text);position:relative;padding-bottom:2px}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--secondary);transition:width var(--transition)}
+.nav-links a:hover::after{width:100%}
+.nav-right{display:flex;align-items:center;gap:1rem}
+
+/* Language switcher */
+.lang-switcher{display:flex;gap:.35rem;align-items:center}
+.lang-switcher button{padding:.2rem .45rem;border-radius:3px;font-size:.75rem;font-weight:700;color:var(--text-light);transition:background var(--transition),color var(--transition)}
+.lang-switcher button.active,.lang-switcher button:hover{background:var(--primary);color:var(--white)}
+
+/* Hamburger */
+.hamburger{display:none;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--primary);transition:all var(--transition)}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* Mobile nav */
+.mobile-nav{display:none;position:fixed;inset:0;background:var(--bg);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem}
+.mobile-nav.open{display:flex}
+.mobile-nav a{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--primary)}
+
+/* === HERO === */
+#hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;background:linear-gradient(135deg,#3d1a0a 0%,#7B3F2B 45%,#C8956C 100%)}
+.hero-bg-pattern{position:absolute;inset:0;background-image:radial-gradient(circle at 20% 80%,rgba(212,175,122,.15) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(255,255,255,.05) 0%,transparent 40%);pointer-events:none}
+.hero-content{position:relative;z-index:2;padding:8rem 0 5rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.hero-text .section-label{color:var(--accent)}
+.hero-text h1{color:var(--white);margin-bottom:1.5rem;font-weight:300;font-style:italic}
+.hero-text h1 strong{font-style:normal;font-weight:700;display:block}
+.hero-tagline{font-size:1.2rem;color:rgba(255,255,255,.85);margin-bottom:2.5rem;font-weight:300;max-width:480px}
+.hero-flags{display:flex;gap:.75rem;margin-bottom:2rem;flex-wrap:wrap}
+.flag-badge{display:flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:30px;padding:.3rem .8rem;backdrop-filter:blur(4px)}
+.flag-emoji{font-size:1.2rem}
+.flag-badge span{font-size:.8rem;font-weight:700;color:var(--white);letter-spacing:.05em}
+.hero-ctas{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-hero-primary{background:var(--white);color:var(--primary)}
+.btn-hero-primary:hover{background:var(--accent);color:var(--white);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.btn-hero-outline{border:2px solid rgba(255,255,255,.6);color:var(--white)}
+.btn-hero-outline:hover{background:rgba(255,255,255,.15);transform:translateY(-2px)}
+.hero-visual{display:flex;justify-content:center;align-items:center}
+.hero-portrait-wrap{position:relative;width:380px;height:480px}
+.hero-portrait-bg{position:absolute;inset:0;border-radius:60% 40% 50% 50% / 50% 50% 40% 60%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2)}
+.hero-portrait{width:100%;height:100%;border-radius:60% 40% 50% 50% / 50% 50% 40% 60%;overflow:hidden;display:flex;align-items:flex-end;justify-content:center;background:linear-gradient(180deg,rgba(200,149,108,.3) 0%,rgba(123,63,43,.6) 100%)}
+.hero-portrait-inner{width:320px;height:420px;background:linear-gradient(180deg,#c8956c 0%,#7b3f2b 100%);border-radius:50% 50% 0 0;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:rgba(255,255,255,.7);text-align:center;padding:2rem}
+.hero-portrait-svg{width:200px;height:200px;opacity:.6}
+.hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;color:rgba(255,255,255,.6);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,rgba(255,255,255,.6),transparent);animation:scrollPulse 2s ease-in-out infinite}
+@keyframes scrollPulse{0%,100%{opacity:.6}50%{opacity:1}}
+
+/* === ABOUT === */
+#about{padding:7rem 0;background:var(--bg)}
+.about-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:5rem;align-items:center}
+.about-image-wrap{position:relative}
+.about-portrait{width:100%;aspect-ratio:3/4;border-radius:4px 40px 4px 40px;overflow:hidden;background:linear-gradient(135deg,var(--secondary) 0%,var(--primary) 100%);display:flex;align-items:center;justify-content:center}
+.about-portrait svg{width:70%;opacity:.4}
+.about-portrait-label{position:absolute;bottom:-1.5rem;right:-1.5rem;background:var(--primary);color:var(--white);padding:1.2rem 1.5rem;border-radius:var(--radius);text-align:center;box-shadow:var(--shadow)}
+.about-portrait-label strong{display:block;font-size:2rem;font-family:'Cormorant Garamond',serif;line-height:1}
+.about-portrait-label span{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;opacity:.8}
+.about-content h2{margin-bottom:1rem;color:var(--primary)}
+.about-content .lead{font-size:1.2rem;color:var(--text);font-weight:300;font-family:'Cormorant Garamond',serif;font-style:italic;margin-bottom:1.5rem;line-height:1.6}
+.about-content p{margin-bottom:1rem}
+.about-badges{display:flex;gap:.5rem;flex-wrap:wrap;margin:2rem 0}
+.cert-badge{background:var(--bg2);border:1px solid var(--accent);border-radius:var(--radius);padding:.5rem 1rem;font-size:.85rem;font-weight:700;color:var(--primary)}
+.about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.5rem;padding-top:2.5rem;border-top:1px solid var(--bg2)}
+.stat strong{display:block;font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:var(--primary);line-height:1}
+.stat span{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text-light)}
+
+/* === LANGUAGES === */
+#languages{padding:7rem 0;background:var(--bg2)}
+.section-header{text-align:center;margin-bottom:4rem}
+.section-header h2{color:var(--primary);margin-bottom:1rem}
+.section-header p{max-width:600px;margin:0 auto}
+.lang-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
+.lang-card{background:var(--white);border-radius:8px;padding:2.5rem 2rem;text-align:center;box-shadow:var(--shadow);transition:transform var(--transition),box-shadow var(--transition);position:relative;overflow:hidden}
+.lang-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--primary),var(--secondary))}
+.lang-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(123,63,43,.15)}
+.lang-flag{font-size:3.5rem;margin-bottom:1rem;display:block}
+.lang-name{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--primary);margin-bottom:.25rem}
+.lang-native{font-size:.85rem;color:var(--text-light);letter-spacing:.05em;margin-bottom:1.5rem}
+.lang-levels{display:flex;flex-wrap:wrap;gap:.35rem;justify-content:center;margin-bottom:1.5rem}
+.lang-selling{font-size:.9rem;color:var(--text-light);font-style:italic;line-height:1.5;padding-top:1rem;border-top:1px solid var(--bg2)}
+
+/* === HOW IT WORKS === */
+#how{padding:7rem 0;background:var(--primary)}
+#how .section-label{color:var(--accent)}
+#how h2{color:var(--white);text-align:center;margin-bottom:1rem}
+#how .section-header p{color:rgba(255,255,255,.75)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;position:relative;margin-top:4rem}
+.steps::before{content:'';position:absolute;top:3rem;left:calc(16.67% + 1rem);right:calc(16.67% + 1rem);height:2px;background:linear-gradient(90deg,var(--accent),var(--secondary));opacity:.4}
+.step{text-align:center;padding:2.5rem 2rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:8px;backdrop-filter:blur(4px);transition:transform var(--transition)}
+.step:hover{transform:translateY(-4px)}
+.step-number{width:4rem;height:4rem;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--secondary));display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--white);margin:0 auto 1.5rem;box-shadow:0 4px 16px rgba(212,175,122,.3)}
+.step h3{color:var(--white);margin-bottom:.75rem}
+.step p{color:rgba(255,255,255,.75);font-size:.95rem}
+.step-icon{font-size:2rem;margin-bottom:1rem;display:block}
+
+/* === TESTIMONIALS === */
+#testimonials{padding:7rem 0;background:var(--bg)}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem}
+.testi-card{background:var(--white);border-radius:8px;padding:2.5rem;box-shadow:var(--shadow);position:relative;transition:transform var(--transition)}
+.testi-card:hover{transform:translateY(-4px)}
+.testi-quote{font-size:4rem;font-family:'Cormorant Garamond',serif;color:var(--accent);line-height:.5;margin-bottom:1rem;display:block}
+.testi-text{font-size:1rem;color:var(--text);font-style:italic;margin-bottom:1.5rem;line-height:1.7}
+.testi-stars{color:var(--accent);margin-bottom:.75rem;font-size:1rem}
+.testi-author{display:flex;align-items:center;gap:1rem;padding-top:1rem;border-top:1px solid var(--bg2)}
+.testi-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--secondary),var(--primary));display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--white);font-weight:700;flex-shrink:0}
+.testi-info strong{display:block;font-size:.9rem;color:var(--text);font-family:'Cormorant Garamond',serif;font-size:1.1rem}
+.testi-info span{font-size:.8rem;color:var(--text-light);letter-spacing:.04em}
+
+/* === PRICING === */
+#pricing{padding:7rem 0;background:var(--bg2)}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem;max-width:900px;margin-left:auto;margin-right:auto}
+.price-card{background:var(--white);border-radius:8px;padding:2.5rem 2rem;box-shadow:var(--shadow);position:relative;text-align:center;transition:transform var(--transition)}
+.price-card.featured{background:var(--primary);transform:scale(1.04)}
+.price-card.featured:hover{transform:scale(1.04) translateY(-4px)}
+.price-card:not(.featured):hover{transform:translateY(-4px)}
+.price-badge{position:absolute;top:-1rem;left:50%;transform:translateX(-50%);background:var(--accent);color:var(--white);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .9rem;border-radius:20px}
+.price-name{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--primary);margin-bottom:.5rem}
+.price-card.featured .price-name{color:var(--accent)}
+.price-amount{font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:700;color:var(--primary);line-height:1;margin:.75rem 0}
+.price-card.featured .price-amount{color:var(--white)}
+.price-period{font-size:.85rem;color:var(--text-light)}
+.price-card.featured .price-period{color:rgba(255,255,255,.7)}
+.price-features{margin:1.5rem 0;text-align:left}
+.price-features li{display:flex;align-items:center;gap:.5rem;padding:.4rem 0;font-size:.9rem;color:var(--text-light);border-bottom:1px solid var(--bg2)}
+.price-card.featured .price-features li{color:rgba(255,255,255,.8);border-bottom-color:rgba(255,255,255,.1)}
+.price-features li::before{content:'✓';color:var(--secondary);font-weight:700;flex-shrink:0}
+.price-card.featured .price-features li::before{color:var(--accent)}
+.price-note{font-size:.78rem;color:var(--text-light);margin-top:1rem;font-style:italic}
+.price-card.featured .price-note{color:rgba(255,255,255,.6)}
+
+/* === FAQ === */
+#faq{padding:7rem 0;background:var(--bg)}
+.faq-list{max-width:760px;margin:3rem auto 0;display:flex;flex-direction:column;gap:.75rem}
+.faq-item{background:var(--white);border-radius:var(--radius);box-shadow:0 2px 12px rgba(0,0,0,.06);overflow:hidden}
+.faq-question{display:flex;align-items:center;justify-content:space-between;padding:1.4rem 1.75rem;cursor:pointer;gap:1rem;transition:background var(--transition)}
+.faq-question:hover{background:var(--bg2)}
+.faq-question h4{font-family:'Lato',sans-serif;font-size:1rem;font-weight:700;color:var(--text)}
+.faq-icon{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:var(--bg2);display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:1.1rem;transition:transform var(--transition),background var(--transition)}
+.faq-item.open .faq-icon{transform:rotate(45deg);background:var(--primary);color:var(--white)}
+.faq-answer{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .4s ease}
+.faq-item.open .faq-answer{max-height:400px;padding:0 1.75rem 1.5rem}
+.faq-answer p{font-size:.95rem;color:var(--text-light);line-height:1.7}
+
+/* === CONTACT === */
+#contact{padding:7rem 0;background:linear-gradient(135deg,#3d1a0a 0%,#7B3F2B 100%)}
+#contact .section-label{color:var(--accent)}
+#contact h2{color:var(--white);margin-bottom:1rem}
+#contact > .container > p{color:rgba(255,255,255,.8);max-width:560px;margin-bottom:3rem}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.contact-info h3{color:var(--accent);font-family:'Cormorant Garamond',serif;margin-bottom:1.5rem}
+.contact-method{display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem}
+.contact-method-icon{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.contact-method p{color:rgba(255,255,255,.7);font-size:.85rem}
+.contact-method a{color:var(--accent);font-size:1rem;font-weight:700}
+.social-row{display:flex;gap:.75rem;margin-top:2rem}
+.social-btn{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--white);transition:background var(--transition),transform var(--transition)}
+.social-btn:hover{background:var(--secondary);transform:translateY(-3px)}
+.contact-form{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:2.5rem;backdrop-filter:blur(4px)}
+.form-group{margin-bottom:1.25rem}
+.form-group label{display:block;font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:.4rem}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:.8rem 1rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:var(--radius);color:var(--white);font-family:'Lato',sans-serif;font-size:.95rem;transition:border-color var(--transition),background var(--transition);outline:none}
+.form-group input::placeholder,.form-group textarea::placeholder{color:rgba(255,255,255,.4)}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--accent);background:rgba(255,255,255,.12)}
+.form-group select option{background:#3d1a0a;color:var(--white)}
+.form-group textarea{resize:vertical;min-height:120px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-submit{width:100%;padding:1rem;background:var(--accent);color:var(--white);font-family:'Lato',sans-serif;font-size:.95rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:var(--radius);cursor:pointer;transition:background var(--transition),transform var(--transition)}
+.form-submit:hover{background:var(--secondary);transform:translateY(-2px)}
+.form-note{font-size:.78rem;color:rgba(255,255,255,.5);text-align:center;margin-top:.75rem}
+
+/* === FOOTER === */
+footer{background:#1a0a04;padding:4rem 0 2rem}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.footer-brand .nav-logo{font-size:1.8rem;color:var(--accent)}
+.footer-brand p{color:rgba(255,255,255,.5);font-size:.9rem;margin-top:.75rem;max-width:280px;line-height:1.6}
+.footer-col h4{font-family:'Lato',sans-serif;font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:1rem}
+.footer-col ul li{margin-bottom:.6rem}
+.footer-col ul a{color:rgba(255,255,255,.6);font-size:.9rem;transition:color var(--transition)}
+.footer-col ul a:hover{color:var(--accent)}
+.footer-divider{border:none;border-top:1px solid rgba(255,255,255,.08);margin-bottom:2rem}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.footer-copy{font-size:.8rem;color:rgba(255,255,255,.35)}
+.footer-quote{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-style:italic;color:rgba(255,255,255,.4);text-align:right;max-width:500px}
+.footer-quotes{margin-top:2rem;padding:1.5rem;background:rgba(255,255,255,.04);border-radius:var(--radius);border-left:3px solid var(--accent)}
+.footer-quotes p{font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,255,255,.6);font-size:.9rem;margin-bottom:.3rem}
+
+/* === RESPONSIVE === */
+@media(max-width:1200px){
+  .lang-grid{grid-template-columns:repeat(2,1fr)}
+  .hero-content{gap:2rem}
+  .hero-portrait-wrap{width:300px;height:380px}
+}
+@media(max-width:768px){
+  .nav-links,.nav-right .btn{display:none}
+  .hamburger{display:flex}
+  .hero-content{grid-template-columns:1fr;padding:7rem 0 4rem;text-align:center}
+  .hero-visual{display:none}
+  .hero-flags{justify-content:center}
+  .hero-ctas{justify-content:center}
+  .about-grid{grid-template-columns:1fr}
+  .about-image-wrap{max-width:340px;margin:0 auto}
+  .lang-grid{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr}
+  .steps::before{display:none}
+  .testi-grid{grid-template-columns:1fr}
+  .pricing-grid{grid-template-columns:1fr;max-width:400px}
+  .price-card.featured{transform:none}
+  .contact-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+  .footer-quote{text-align:center}
+  .form-row{grid-template-columns:1fr}
+  .about-stats{grid-template-columns:1fr 1fr}
+}
+@media(max-width:360px){
+  .lang-grid{grid-template-columns:1fr}
+  .hero-flags{gap:.5rem}
+  .flag-badge span{display:none}
+  .pricing-grid{max-width:100%}
+}
+</style>
+</head>
+<body>
+
+<!-- SECTION: Navigation -->
+<nav id="mainNav" role="navigation" aria-label="Main navigation">
+  <div class="container nav-inner">
+    <a href="#hero" class="nav-logo" aria-label="Veronique Pimentel home">VP<span>·</span>Languages</a>
+    <ul class="nav-links" role="list">
+      <li><a href="#about" data-i18n="nav_about">About</a></li>
+      <li><a href="#languages" data-i18n="nav_languages">Languages</a></li>
+      <li><a href="#how" data-i18n="nav_how">How It Works</a></li>
+      <li><a href="#testimonials" data-i18n="nav_testimonials">Testimonials</a></li>
+      <li><a href="#pricing" data-i18n="nav_pricing">Pricing</a></li>
+      <li><a href="#faq" data-i18n="nav_faq">FAQ</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-switcher" role="group" aria-label="Language switcher">
+        <button onclick="setLang('en')" class="active" aria-label="Switch to English">EN</button>
+        <button onclick="setLang('fr')" aria-label="Switch to French">FR</button>
+        <button onclick="setLang('de')" aria-label="Switch to German">DE</button>
+        <button onclick="setLang('es')" aria-label="Switch to Spanish">ES</button>
+        <button onclick="setLang('pt')" aria-label="Switch to Portuguese">PT</button>
+      </div>
+      <a href="#contact" class="btn btn-primary" data-i18n="nav_cta">Book Free Trial</a>
+    </div>
+    <button class="hamburger" aria-label="Toggle mobile menu" aria-expanded="false" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Navigation -->
+<div class="mobile-nav" id="mobileNav" role="dialog" aria-label="Mobile navigation" aria-modal="true">
+  <a href="#about" onclick="toggleMenu()" data-i18n="nav_about">About</a>
+  <a href="#languages" onclick="toggleMenu()" data-i18n="nav_languages">Languages</a>
+  <a href="#how" onclick="toggleMenu()" data-i18n="nav_how">How It Works</a>
+  <a href="#testimonials" onclick="toggleMenu()" data-i18n="nav_testimonials">Testimonials</a>
+  <a href="#pricing" onclick="toggleMenu()" data-i18n="nav_pricing">Pricing</a>
+  <a href="#faq" onclick="toggleMenu()">FAQ</a>
+  <a href="#contact" class="btn btn-primary" onclick="toggleMenu()" data-i18n="nav_cta">Book Free Trial</a>
+</div>
+
+<!-- SECTION: Hero -->
+<section id="hero" aria-label="Hero">
+  <div class="hero-bg-pattern" aria-hidden="true"></div>
+  <div class="container hero-content">
+    <div class="hero-text">
+      <span class="section-label" data-i18n="hero_label">Professional Language Tutor</span>
+      <h1><span data-i18n="hero_h1_top">Your Gateway to</span> <strong>4 Languages.</strong></h1>
+      <p class="hero-tagline" data-i18n="hero_tagline">Unlock French, German, Spanish &amp; Portuguese with a qualified, passionate tutor — at your pace, on your schedule.</p>
+      <div class="hero-flags" aria-label="Languages taught">
+        <div class="flag-badge"><span class="flag-emoji" aria-hidden="true">🇫🇷</span><span>Français</span></div>
+        <div class="flag-badge"><span class="flag-emoji" aria-hidden="true">🇩🇪</span><span>Deutsch</span></div>
+        <div class="flag-badge"><span class="flag-emoji" aria-hidden="true">🇪🇸</span><span>Español</span></div>
+        <div class="flag-badge"><span class="flag-emoji" aria-hidden="true">🇵🇹</span><span>Português</span></div>
+      </div>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn btn-hero-primary" data-i18n="hero_cta1" aria-label="Book a free trial lesson">Book a Free Trial</a>
+        <a href="#languages" class="btn btn-hero-outline" data-i18n="hero_cta2">Explore Languages</a>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hero-portrait-wrap">
+        <div class="hero-portrait-bg"></div>
+        <div class="hero-portrait">
+          <div class="hero-portrait-inner">
+            <svg class="hero-portrait-svg" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="50" cy="35" rx="22" ry="25" fill="rgba(255,255,255,0.3)"/>
+              <path d="M10 110 Q50 75 90 110" stroke="rgba(255,255,255,0.3)" stroke-width="2" fill="rgba(255,255,255,0.15)"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">
+    <span data-i18n="scroll_label">Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- SECTION: About -->
+<section id="about" aria-label="About Veronique">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-image-wrap reveal">
+        <div class="about-portrait" role="img" aria-label="Portrait of Veronique Pimentel">
+          <svg viewBox="0 0 200 280" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <ellipse cx="100" cy="80" rx="45" ry="52" fill="rgba(255,255,255,0.25)"/>
+            <path d="M20 260 Q100 190 180 260" fill="rgba(255,255,255,0.15)"/>
+            <circle cx="100" cy="80" r="30" fill="rgba(255,255,255,0.15)"/>
+          </svg>
+        </div>
+        <div class="about-portrait-label">
+          <strong>20+</strong>
+          <span data-i18n="about_years_label">Years Teaching</span>
+        </div>
+      </div>
+      <div class="about-content reveal">
+        <span class="section-label" data-i18n="about_label">About Veronique</span>
+        <h2 data-i18n="about_h2">Passion for Languages, <em>Dedication to You</em></h2>
+        <p class="lead" data-i18n="about_lead">"Languages are not just words — they are windows into entire worlds, cultures, and ways of thinking."</p>
+        <p data-i18n="about_p1">Born in Paris and having lived across four European countries, I bring an authentic, immersive perspective to every lesson. With over 20 years of professional teaching experience, I have guided hundreds of students from beginner to advanced levels across French, German, Spanish, and Portuguese.</p>
+        <p data-i18n="about_p2">My approach blends conversational immersion with structured grammar, tailoring every session to your specific goals — whether that's acing your GCSE exam, preparing for a business trip, or simply falling in love with a new culture.</p>
+        <div class="about-badges">
+          <span class="cert-badge">AQA Certified</span>
+          <span class="cert-badge">EDEXCEL</span>
+          <span class="cert-badge">IB Examiner</span>
+          <span class="cert-badge">DELF/DALF</span>
+          <span class="cert-badge">QTS Qualified</span>
+        </div>
+        <div class="about-stats">
+          <div class="stat"><strong>500+</strong><span data-i18n="stat_students">Students Taught</span></div>
+          <div class="stat"><strong>4</strong><span data-i18n="stat_languages">Languages</span></div>
+          <div class="stat"><strong>98%</strong><span data-i18n="stat_pass">Pass Rate</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: Languages -->
+<section id="languages" aria-label="Languages offered">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label" data-i18n="lang_label">What I Teach</span>
+      <h2 data-i18n="lang_h2">Four Languages, One Expert Tutor</h2>
+      <p data-i18n="lang_sub">From Key Stage 3 through to A-Level, IB and beyond — structured, engaging lessons designed to inspire confidence.</p>
+    </div>
+    <div class="lang-grid">
+      <div class="lang-card reveal">
+        <span class="lang-flag" aria-label="French flag">🇫🇷</span>
+        <div class="lang-name">Français</div>
+        <div class="lang-native">French</div>
+        <div class="lang-levels">
+          <span class="tag">KS3</span><span class="tag">KS4</span><span class="tag">KS5</span>
+          <span class="tag">GCSE</span><span class="tag">IGCSE</span><span class="tag">IB</span><span class="tag">A-Level</span>
+        </div>
+        <p class="lang-selling" data-i18n="fr_selling">As a native French speaker, I offer an unparalleled authentic experience that goes far beyond the textbook.</p>
+      </div>
+      <div class="lang-card reveal">
+        <span class="lang-flag" aria-label="German flag">🇩🇪</span>
+        <div class="lang-name">Deutsch</div>
+        <div class="lang-native">German</div>
+        <div class="lang-levels">
+          <span class="tag">KS3</span><span class="tag">KS4</span><span class="tag">KS5</span>
+          <span class="tag">GCSE</span><span class="tag">IGCSE</span><span class="tag">IB</span><span class="tag">A-Level</span>
+        </div>
+        <p class="lang-selling" data-i18n="de_selling">My structured grammar-first approach makes German's famous complexity feel logical, manageable and even enjoyable.</p>
+      </div>
+      <div class="lang-card reveal">
+        <span class="lang-flag" aria-label="Spanish flag">🇪🇸</span>
+        <div class="lang-name">Español</div>
+        <div class="lang-native">Spanish</div>
+        <div class="lang-levels">
+          <span class="tag">KS3</span><span class="tag">KS4</span><span class="tag">KS5</span>
+          <span class="tag">GCSE</span><span class="tag">IGCSE</span><span class="tag">IB</span><span class="tag">A-Level</span>
+        </div>
+        <p class="lang-selling" data-i18n="es_selling">Conversational from day one — learn the Spanish that natives actually speak, with cultural context built in.</p>
+      </div>
+      <div class="lang-card reveal">
+        <span class="lang-flag" aria-label="Portuguese flag">🇵🇹</span>
+        <div class="lang-name">Português</div>
+        <div class="lang-native">Portuguese</div>
+        <div class="lang-levels">
+          <span class="tag">KS3</span><span class="tag">KS4</span><span class="tag">KS5</span>
+          <span class="tag">GCSE</span><span class="tag">IGCSE</span><span class="tag">IB</span><span class="tag">A-Level</span>
+        </div>
+        <p class="lang-selling" data-i18n="pt_selling">Master European and Brazilian Portuguese with a tutor who bridges both variants — opening doors to 260 million speakers.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: How It Works -->
+<section id="how" aria-label="How lessons work">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label" data-i18n="how_label">The Process</span>
+      <h2 data-i18n="how_h2">Simple. Structured. Effective.</h2>
+      <p data-i18n="how_sub">From first contact to fluency — here's how we get there together.</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <span class="step-icon" aria-hidden="true">🎯</span>
+        <div class="step-number" aria-hidden="true">1</div>
+        <h3 data-i18n="step1_title">Free Trial Lesson</h3>
+        <p data-i18n="step1_desc">A relaxed 30-minute session to assess your current level, discuss your goals, and see if we're the right fit — completely free, no obligation.</p>
+      </div>
+      <div class="step reveal">
+        <span class="step-icon" aria-hidden="true">📋</span>
+        <div class="step-number" aria-hidden="true">2</div>
+        <h3 data-i18n="step2_title">Personalised Plan</h3>
+        <p data-i18n="step2_desc">I design a bespoke learning roadmap tailored to your level, learning style, exam board, and timeline — no two plans are the same.</p>
+      </div>
+      <div class="step reveal">
+        <span class="step-icon" aria-hidden="true">🚀</span>
+        <div class="step-number" aria-hidden="true">3</div>
+        <h3 data-i18n="step3_title">Weekly Sessions</h3>
+        <p data-i18n="step3_desc">Regular online sessions via video call, with resources, recordings, and homework sent after each lesson. Progress tracked every month.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: Testimonials -->
+<section id="testimonials" aria-label="Student testimonials">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label" data-i18n="testi_label">Student Stories</span>
+      <h2 data-i18n="testi_h2">What My Students Say</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <span class="testi-quote" aria-hidden="true">"</span>
+        <div class="testi-stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <p class="testi-text" data-i18n="testi1_text">"Veronique transformed my French from a C to an A* in just six months. Her lessons are structured yet wonderfully warm — I actually looked forward to every session. She has this remarkable ability to make grammar feel like a puzzle rather than a chore."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" aria-hidden="true">E</div>
+          <div class="testi-info">
+            <strong>Emily Harrison</strong>
+            <span data-i18n="testi1_meta">British · A-Level French · Grade A*</span>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <span class="testi-quote" aria-hidden="true">"</span>
+        <div class="testi-stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <p class="testi-text" data-i18n="testi2_text">"I needed Spanish for a business relocation to Madrid. In four months with Veronique I went from absolute zero to holding confident meetings in Spanish. Her business vocabulary sessions and her cultural insights were invaluable — worth every penny."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" aria-hidden="true">M</div>
+          <div class="testi-info">
+            <strong>Marcus Bauer</strong>
+            <span data-i18n="testi2_meta">German · Business Spanish · B2 Level</span>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <span class="testi-quote" aria-hidden="true">"</span>
+        <div class="testi-stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <p class="testi-text" data-i18n="testi3_text">"My son was really struggling with GCSE German — he'd lost all confidence. Veronique's patient, encouraging style brought him back on track and he passed with a Grade 8. As a parent I couldn't be more grateful. We're now starting Portuguese as a family!"</p>
+        <div class="testi-author">
+          <div class="testi-avatar" aria-hidden="true">S</div>
+          <div class="testi-info">
+            <strong>Sophia Andersson</strong>
+            <span data-i18n="testi3_meta">Swedish · GCSE German (son) · Grade 8</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: Pricing -->
+<section id="pricing" aria-label="Lesson pricing">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label" data-i18n="price_label">Investment</span>
+      <h2 data-i18n="price_h2">Transparent, Simple Pricing</h2>
+      <p data-i18n="price_sub">All sessions are online. First trial lesson is always free.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card reveal">
+        <div class="price-name" data-i18n="price1_name">Single Lesson</div>
+        <div class="price-amount">£70</div>
+        <div class="price-period" data-i18n="price_per_hr">per 60-min session</div>
+        <ul class="price-features">
+          <li data-i18n="pf1_1">One-to-one online lesson</li>
+          <li data-i18n="pf1_2">Personalised materials</li>
+          <li data-i18n="pf1_3">Post-lesson resources</li>
+          <li data-i18n="pf1_4">Any level or language</li>
+        </ul>
+        <a href="#contact" class="btn btn-outline" data-i18n="price_btn_book">Book a Lesson</a>
+      </div>
+      <div class="price-card featured reveal">
+        <div class="price-badge" data-i18n="price_recommended">Most Popular</div>
+        <div class="price-name" data-i18n="price2_name">Monthly Pack</div>
+        <div class="price-amount" style="color:var(--accent)">£240</div>
+        <div class="price-period" data-i18n="price2_period">4 lessons per month</div>
+        <ul class="price-features">
+          <li data-i18n="pf2_1">Save £40 vs. single lessons</li>
+          <li data-i18n="pf2_2">Priority scheduling</li>
+          <li data-i18n="pf2_3">Monthly progress report</li>
+          <li data-i18n="pf2_4">WhatsApp support between sessions</li>
+          <li data-i18n="pf2_5">Exam prep resources included</li>
+        </ul>
+        <a href="#contact" class="btn" style="background:var(--accent);color:var(--white);display:inline-block;padding:.85rem 2.2rem;border-radius:var(--radius);font-weight:700;letter-spacing:.06em;text-transform:uppercase;width:100%;text-align:center" data-i18n="price_btn_start">Start This Month</a>
+        <p class="price-note" data-i18n="price2_note">No contract — cancel anytime</p>
+      </div>
+      <div class="price-card reveal">
+        <div class="price-name" data-i18n="price3_name">Intensive Block</div>
+        <div class="price-amount">£420</div>
+        <div class="price-period" data-i18n="price3_period">8 lessons — ideal for exam prep</div>
+        <ul class="price-features">
+          <li data-i18n="pf3_1">Save £140 vs. single lessons</li>
+          <li data-i18n="pf3_2">Exam board–specific coaching</li>
+          <li data-i18n="pf3_3">Mock papers &amp; marking</li>
+          <li data-i18n="pf3_4">Recording of each session</li>
+        </ul>
+        <a href="#contact" class="btn btn-outline" data-i18n="price_btn_enquire">Enquire Now</a>
+        <p class="price-note" data-i18n="price3_note">Best for GCSE / A-Level students</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: FAQ -->
+<section id="faq" aria-label="Frequently asked questions">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label" data-i18n="faq_label">FAQ</span>
+      <h2 data-i18n="faq_h2">Your Questions, Answered</h2>
+    </div>
+    <div class="faq-list" role="list">
+      <div class="faq-item" role="listitem">
+        <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+          <h4 data-i18n="faq1_q">How do online lessons work technically?</h4>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer"><p data-i18n="faq1_a">Lessons take place via Zoom or Google Meet — whichever you prefer. You'll receive a link before each session. I use an interactive whiteboard, screen sharing, and video so sessions feel just as engaging as face-to-face. All you need is a stable internet connection, a device with a camera and microphone, and a notepad.</p></div>
+      </div>
+      <div class="faq-item" role="listitem">
+        <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+          <h4 data-i18n="faq2_q">What levels do you teach?</h4>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer"><p data-i18n="faq2_a">I teach all levels from complete beginner through to university entry. For school students this covers Key Stage 3 (Years 7–9), GCSE and IGCSE (Years 10–11), and A-Level / IB (Years 12–13). For adults, I work with all CEFR levels from A1 to C2, including business language and conversational practice.</p></div>
+      </div>
+      <div class="faq-item" role="listitem">
+        <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+          <h4 data-i18n="faq3_q">Can I learn two languages at the same time?</h4>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer"><p data-i18n="faq3_a">Absolutely — and as a multilingual tutor I can help you leverage the similarities between languages (especially within the Romance family: French, Spanish, Portuguese). Many of my students study two languages simultaneously. I'll design separate lesson plans for each and can even highlight cross-language patterns to accelerate your progress in both.</p></div>
+      </div>
+      <div class="faq-item" role="listitem">
+        <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+          <h4 data-i18n="faq4_q">Which exam boards do you cover?</h4>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer"><p data-i18n="faq4_a">I have extensive experience with AQA, Edexcel, OCR, WJEC (Eduqas), and Cambridge IGCSE across all four languages. For IB students I cover both Standard Level and Higher Level. I'll align every lesson to the specific mark scheme and assessment objectives of your exam board.</p></div>
+      </div>
+      <div class="faq-item" role="listitem">
+        <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+          <h4 data-i18n="faq5_q">How do I pay and what is your cancellation policy?</h4>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer"><p data-i18n="faq5_a">Payment is made by bank transfer or PayPal before each lesson or at the start of a monthly pack. I ask for 24 hours' notice to reschedule or cancel a lesson — late cancellations (under 24 hours) are charged at 50%. There are no long-term contracts; you can stop or pause lessons at any time.</p></div>
+      </div>
+      <div class="faq-item" role="listitem">
+        <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+          <h4 data-i18n="faq6_q">Do you provide materials and homework?</h4>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer"><p data-i18n="faq6_a">Yes — all materials are included in the lesson price. After each session I send a PDF summary of what we covered, supplementary exercises, and audio resources. For exam students I provide past papers, model answers, and vocabulary lists tailored to your exam board. There is no need to purchase any textbook.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: Contact -->
+<section id="contact" aria-label="Contact and booking">
+  <div class="container">
+    <span class="section-label" data-i18n="contact_label">Get in Touch</span>
+    <h2 class="reveal" data-i18n="contact_h2">Start Your Language Journey Today</h2>
+    <p class="reveal" data-i18n="contact_sub">Ready to book your free trial or have a question? Fill in the form and I'll respond within 24 hours.</p>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <h3 data-i18n="contact_info_title">Let's Talk Languages</h3>
+        <div class="contact-method">
+          <div class="contact-method-icon" aria-hidden="true">✉️</div>
+          <div>
+            <p data-i18n="contact_email_label">Email</p>
+            <a href="mailto:verone@languageswithverone.com" aria-label="Send email to Veronique">verone@languageswithverone.com</a>
+          </div>
+        </div>
+        <div class="contact-method">
+          <div class="contact-method-icon" aria-hidden="true">📍</div>
+          <div>
+            <p data-i18n="contact_location_label">Location</p>
+            <a style="color:var(--accent)">Online — Worldwide</a>
+          </div>
+        </div>
+        <div class="contact-method">
+          <div class="contact-method-icon" aria-hidden="true">🕐</div>
+          <div>
+            <p data-i18n="contact_hours_label">Availability</p>
+            <a style="color:var(--accent)" data-i18n="contact_hours">Mon–Sat, 8am–8pm (GMT)</a>
+          </div>
+        </div>
+        <div class="social-row" aria-label="Social media links">
+          <a href="#" class="social-btn" aria-label="Instagram @veronelangues" title="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="LinkedIn profile" title="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M8 11v5M8 8v.01M12 16v-5M12 11a3 3 0 016 0v5"/></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="Facebook page" title="Facebook">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="contact-form reveal" role="form" aria-label="Booking enquiry form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="form-name" data-i18n="form_name">Your Name</label>
+            <input type="text" id="form-name" placeholder="Jane Smith" autocomplete="name" required aria-required="true">
+          </div>
+          <div class="form-group">
+            <label for="form-email" data-i18n="form_email">Email Address</label>
+            <input type="email" id="form-email" placeholder="jane@example.com" autocomplete="email" required aria-required="true">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="form-language" data-i18n="form_language">Language of Interest</label>
+            <select id="form-language" aria-label="Select language">
+              <option value="">Select a language…</option>
+              <option>French</option>
+              <option>German</option>
+              <option>Spanish</option>
+              <option>Portuguese</option>
+              <option>Multiple Languages</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="form-level" data-i18n="form_level">Current Level</label>
+            <select id="form-level" aria-label="Select level">
+              <option value="">Select level…</option>
+              <option>Complete Beginner</option>
+              <option>KS3 / Elementary</option>
+              <option>GCSE / Intermediate</option>
+              <option>A-Level / Advanced</option>
+              <option>IB / University</option>
+              <option>Business / Professional</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="form-message" data-i18n="form_message">Your Message</label>
+          <textarea id="form-message" placeholder="Tell me about your goals, current level, and when you'd like to start…" rows="4"></textarea>
+        </div>
+        <button type="button" class="form-submit" onclick="submitForm()" data-i18n="form_submit" aria-label="Send enquiry">Send Enquiry</button>
+        <p class="form-note" data-i18n="form_note">I respond to all enquiries within 24 hours. Your data is never shared with third parties.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: Footer -->
+<footer aria-label="Site footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">VP<span style="color:var(--secondary)">·</span>Languages</div>
+        <p data-i18n="footer_desc">Professional online tuition in French, German, Spanish &amp; Portuguese. Qualified, experienced, passionate.</p>
+        <div class="footer-quotes">
+          <p>🇫🇷 "Les langues sont les clés du monde." — Voltaire</p>
+          <p>🇩🇪 "Eine andere Sprache zu lernen ist, ein zweites Fenster zu öffnen."</p>
+          <p>🇪🇸 "El límite de mi lenguaje es el límite de mi mundo." — Wittgenstein</p>
+          <p>🇵🇹 "Uma língua diferente é uma visão diferente da vida." — F. Fellini</p>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer_nav_title">Navigation</h4>
+        <ul>
+          <li><a href="#about" data-i18n="nav_about">About</a></li>
+          <li><a href="#languages" data-i18n="nav_languages">Languages</a></li>
+          <li><a href="#how" data-i18n="nav_how">How It Works</a></li>
+          <li><a href="#testimonials" data-i18n="nav_testimonials">Testimonials</a></li>
+          <li><a href="#pricing" data-i18n="nav_pricing">Pricing</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contact" data-i18n="footer_contact_link">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer_langs_title">Languages</h4>
+        <ul>
+          <li><a href="#languages">🇫🇷 Français</a></li>
+          <li><a href="#languages">🇩🇪 Deutsch</a></li>
+          <li><a href="#languages">🇪🇸 Español</a></li>
+          <li><a href="#languages">🇵🇹 Português</a></li>
+        </ul>
+        <h4 style="margin-top:1.5rem" data-i18n="footer_contact_title">Contact</h4>
+        <ul>
+          <li><a href="mailto:verone@languageswithverone.com">Email Me</a></li>
+          <li><a href="#contact" data-i18n="footer_book_link">Book Free Trial</a></li>
+        </ul>
+      </div>
+    </div>
+    <hr class="footer-divider">
+    <div class="footer-bottom">
+      <p class="footer-copy" data-i18n="footer_copy">© 2025 Veronique Pimentel · Languages with Verone. All rights reserved.</p>
+      <p class="footer-quote" data-i18n="footer_quote">Every language you learn opens a new door. — Anonymous</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* === TRANSLATIONS === */
+const i18n = {
+  en: {
+    nav_about:'About', nav_languages:'Languages', nav_how:'How It Works',
+    nav_testimonials:'Testimonials', nav_pricing:'Pricing', nav_faq:'FAQ',
+    nav_cta:'Book Free Trial',
+    hero_label:'Professional Language Tutor',
+    hero_h1_top:'Your Gateway to',
+    hero_tagline:'Unlock French, German, Spanish & Portuguese with a qualified, passionate tutor — at your pace, on your schedule.',
+    hero_cta1:'Book a Free Trial', hero_cta2:'Explore Languages',
+    scroll_label:'Scroll',
+    about_label:'About Veronique', about_h2:'Passion for Languages, Dedication to You',
+    about_lead:'"Languages are not just words — they are windows into entire worlds, cultures, and ways of thinking."',
+    about_p1:'Born in Paris and having lived across four European countries, I bring an authentic, immersive perspective to every lesson. With over 20 years of professional teaching experience, I have guided hundreds of students from beginner to advanced levels across French, German, Spanish, and Portuguese.',
+    about_p2:'My approach blends conversational immersion with structured grammar, tailoring every session to your specific goals — whether that\'s acing your GCSE exam, preparing for a business trip, or simply falling in love with a new culture.',
+    about_years_label:'Years Teaching',
+    stat_students:'Students Taught', stat_languages:'Languages', stat_pass:'Pass Rate',
+    lang_label:'What I Teach', lang_h2:'Four Languages, One Expert Tutor',
+    lang_sub:'From Key Stage 3 through to A-Level, IB and beyond — structured, engaging lessons designed to inspire confidence.',
+    fr_selling:'As a native French speaker, I offer an unparalleled authentic experience that goes far beyond the textbook.',
+    de_selling:'My structured grammar-first approach makes German\'s famous complexity feel logical, manageable and even enjoyable.',
+    es_selling:'Conversational from day one — learn the Spanish that natives actually speak, with cultural context built in.',
+    pt_selling:'Master European and Brazilian Portuguese with a tutor who bridges both variants — opening doors to 260 million speakers.',
+    how_label:'The Process', how_h2:'Simple. Structured. Effective.',
+    how_sub:'From first contact to fluency — here\'s how we get there together.',
+    step1_title:'Free Trial Lesson', step1_desc:'A relaxed 30-minute session to assess your current level, discuss your goals, and see if we\'re the right fit — completely free, no obligation.',
+    step2_title:'Personalised Plan', step2_desc:'I design a bespoke learning roadmap tailored to your level, learning style, exam board, and timeline — no two plans are the same.',
+    step3_title:'Weekly Sessions', step3_desc:'Regular online sessions via video call, with resources, recordings, and homework sent after each lesson. Progress tracked every month.',
+    testi_label:'Student Stories', testi_h2:'What My Students Say',
+    testi1_text:'"Veronique transformed my French from a C to an A* in just six months. Her lessons are structured yet wonderfully warm — I actually looked forward to every session."',
+    testi1_meta:'British · A-Level French · Grade A*',
+    testi2_text:'"I needed Spanish for a business relocation to Madrid. In four months with Veronique I went from absolute zero to holding confident meetings in Spanish."',
+    testi2_meta:'German · Business Spanish · B2 Level',
+    testi3_text:'"My son was really struggling with GCSE German — Veronique\'s patient, encouraging style brought him back on track. He passed with a Grade 8!"',
+    testi3_meta:'Swedish · GCSE German (son) · Grade 8',
+    price_label:'Investment', price_h2:'Transparent, Simple Pricing',
+    price_sub:'All sessions are online. First trial lesson is always free.',
+    price1_name:'Single Lesson', price_per_hr:'per 60-min session',
+    pf1_1:'One-to-one online lesson', pf1_2:'Personalised materials', pf1_3:'Post-lesson resources', pf1_4:'Any level or language',
+    price2_name:'Monthly Pack', price2_period:'4 lessons per month', price_recommended:'Most Popular',
+    pf2_1:'Save £40 vs. single lessons', pf2_2:'Priority scheduling', pf2_3:'Monthly progress report', pf2_4:'WhatsApp support between sessions', pf2_5:'Exam prep resources included',
+    price2_note:'No contract — cancel anytime',
+    price3_name:'Intensive Block', price3_period:'8 lessons — ideal for exam prep',
+    pf3_1:'Save £140 vs. single lessons', pf3_2:'Exam board–specific coaching', pf3_3:'Mock papers & marking', pf3_4:'Recording of each session',
+    price3_note:'Best for GCSE / A-Level students',
+    price_btn_book:'Book a Lesson', price_btn_start:'Start This Month', price_btn_enquire:'Enquire Now',
+    faq_label:'FAQ', faq_h2:'Your Questions, Answered',
+    faq1_q:'How do online lessons work technically?',
+    faq1_a:'Lessons take place via Zoom or Google Meet. You\'ll receive a link before each session. I use an interactive whiteboard, screen sharing, and video so sessions feel just as engaging as face-to-face.',
+    faq2_q:'What levels do you teach?',
+    faq2_a:'I teach all levels from complete beginner through to university entry — KS3, GCSE, IGCSE, A-Level, IB, and adult/business levels (CEFR A1–C2).',
+    faq3_q:'Can I learn two languages at the same time?',
+    faq3_a:'Absolutely. Many students study two languages simultaneously. I design separate lesson plans for each and leverage the similarities between Romance languages to accelerate progress.',
+    faq4_q:'Which exam boards do you cover?',
+    faq4_a:'AQA, Edexcel, OCR, WJEC (Eduqas), Cambridge IGCSE, and IB (SL & HL) across all four languages.',
+    faq5_q:'How do I pay and what is your cancellation policy?',
+    faq5_a:'Payment by bank transfer or PayPal before each lesson. 24 hours\' notice required to cancel. Late cancellations charged at 50%. No long-term contracts.',
+    faq6_q:'Do you provide materials and homework?',
+    faq6_a:'Yes — all materials included. After each session I send a PDF summary, supplementary exercises, and audio resources. No textbook purchase needed.',
+    contact_label:'Get in Touch', contact_h2:'Start Your Language Journey Today',
+    contact_sub:'Ready to book your free trial? Fill in the form and I\'ll respond within 24 hours.',
+    contact_info_title:'Let\'s Talk Languages',
+    contact_email_label:'Email', contact_location_label:'Location', contact_hours_label:'Availability',
+    contact_hours:'Mon–Sat, 8am–8pm (GMT)',
+    form_name:'Your Name', form_email:'Email Address', form_language:'Language of Interest',
+    form_level:'Current Level', form_message:'Your Message',
+    form_submit:'Send Enquiry', form_note:'I respond within 24 hours. Your data is never shared.',
+    footer_desc:'Professional online tuition in French, German, Spanish & Portuguese.',
+    footer_nav_title:'Navigation', footer_langs_title:'Languages', footer_contact_title:'Contact',
+    footer_contact_link:'Contact', footer_book_link:'Book Free Trial',
+    footer_copy:'© 2025 Veronique Pimentel · Languages with Verone. All rights reserved.',
+    footer_quote:'Every language you learn opens a new door. — Anonymous'
+  },
+  fr: {
+    nav_about:'À propos', nav_languages:'Langues', nav_how:'Comment ça marche',
+    nav_testimonials:'Témoignages', nav_pricing:'Tarifs', nav_faq:'FAQ',
+    nav_cta:'Cours d\'essai gratuit',
+    hero_label:'Professeur de langues',
+    hero_h1_top:'Votre passerelle vers',
+    hero_tagline:'Maîtrisez le français, l\'allemand, l\'espagnol et le portugais avec un professeur passionné et qualifié — à votre rythme.',
+    hero_cta1:'Cours d\'essai gratuit', hero_cta2:'Découvrir les langues',
+    scroll_label:'Défiler',
+    about_label:'À propos de Véronique', about_h2:'Passion pour les langues, dévouement pour vous',
+    about_lead:'"Les langues ne sont pas que des mots — elles sont des fenêtres sur des mondes entiers."',
+    about_p1:'Née à Paris et ayant vécu dans quatre pays européens, j\'apporte une perspective authentique et immersive à chaque cours. Forte de plus de 20 ans d\'expérience, j\'ai guidé des centaines d\'élèves de débutant à avancé.',
+    about_p2:'Mon approche mêle immersion conversationnelle et grammaire structurée, adaptant chaque séance à vos objectifs spécifiques.',
+    about_years_label:'Années d\'enseignement',
+    stat_students:'Élèves formés', stat_languages:'Langues', stat_pass:'Taux de réussite',
+    lang_label:'Ce que j\'enseigne', lang_h2:'Quatre langues, un seul expert',
+    lang_sub:'Du collège au baccalauréat, IB et au-delà — des cours structurés conçus pour inspirer la confiance.',
+    fr_selling:'En tant que locutrice native, j\'offre une expérience authentique inégalée qui va bien au-delà du manuel.',
+    de_selling:'Mon approche structurée rend la complexité de l\'allemand logique, gérable et même agréable.',
+    es_selling:'Conversationnel dès le premier jour — apprenez l\'espagnol que les natifs parlent vraiment.',
+    pt_selling:'Maîtrisez le portugais européen et brésilien — ouvrant les portes à 260 millions de locuteurs.',
+    how_label:'Le processus', how_h2:'Simple. Structuré. Efficace.',
+    how_sub:'Du premier contact à la fluidité — voici comment nous y arrivons ensemble.',
+    step1_title:'Cours d\'essai gratuit', step1_desc:'Une séance détendue de 30 minutes pour évaluer votre niveau, discuter de vos objectifs — totalement gratuit, sans engagement.',
+    step2_title:'Plan personnalisé', step2_desc:'Je conçois un programme d\'apprentissage sur mesure adapté à votre niveau, votre style d\'apprentissage et votre calendrier.',
+    step3_title:'Séances hebdomadaires', step3_desc:'Des cours en ligne réguliers par appel vidéo, avec ressources et devoirs envoyés après chaque séance.',
+    testi_label:'Témoignages', testi_h2:'Ce que disent mes élèves',
+    testi1_text:'"Véronique a transformé mon français en six mois seulement. Ses cours sont structurés mais merveilleusement chaleureux."',
+    testi1_meta:'Britannique · A-Level Français · Note A*',
+    testi2_text:'"J\'avais besoin de l\'espagnol pour un transfert professionnel à Madrid. En quatre mois, je menais des réunions en espagnol avec confiance."',
+    testi2_meta:'Allemand · Espagnol des affaires · Niveau B2',
+    testi3_text:'"Mon fils avait vraiment du mal avec l\'allemand au GCSE — Véronique l\'a remis sur la bonne voie. Il a obtenu un Grade 8 !"',
+    testi3_meta:'Suédoise · GCSE Allemand (fils) · Grade 8',
+    price_label:'Investissement', price_h2:'Tarifs transparents et simples',
+    price_sub:'Toutes les séances sont en ligne. Le premier cours d\'essai est toujours gratuit.',
+    price1_name:'Cours individuel', price_per_hr:'par séance de 60 min',
+    pf1_1:'Cours individuel en ligne', pf1_2:'Matériaux personnalisés', pf1_3:'Ressources post-cours', pf1_4:'Tous niveaux et langues',
+    price2_name:'Pack mensuel', price2_period:'4 cours par mois', price_recommended:'Le plus populaire',
+    pf2_1:'Économisez £40 vs. cours individuels', pf2_2:'Planification prioritaire', pf2_3:'Rapport de progrès mensuel', pf2_4:'Support WhatsApp entre les séances', pf2_5:'Ressources d\'examen incluses',
+    price2_note:'Sans contrat — annulez à tout moment',
+    price3_name:'Bloc intensif', price3_period:'8 cours — idéal pour la préparation aux examens',
+    pf3_1:'Économisez £140', pf3_2:'Coaching spécifique au programme', pf3_3:'Sujets blancs et correction', pf3_4:'Enregistrement de chaque séance',
+    price3_note:'Idéal pour les élèves GCSE / A-Level',
+    price_btn_book:'Réserver un cours', price_btn_start:'Commencer ce mois', price_btn_enquire:'Renseignez-vous',
+    faq_label:'FAQ', faq_h2:'Vos questions, nos réponses',
+    faq1_q:'Comment fonctionnent les cours en ligne ?',
+    faq1_a:'Les cours ont lieu via Zoom ou Google Meet. Vous recevrez un lien avant chaque séance. J\'utilise un tableau blanc interactif et le partage d\'écran.',
+    faq2_q:'Quels niveaux enseignez-vous ?',
+    faq2_a:'J\'enseigne tous les niveaux du débutant complet jusqu\'à l\'entrée à l\'université — collège, lycée, IB et adultes.',
+    faq3_q:'Puis-je apprendre deux langues en même temps ?',
+    faq3_a:'Absolument. Je conçois des plans séparés pour chaque langue et exploite les similitudes entre les langues romanes.',
+    faq4_q:'Quels programmes d\'examen couvrez-vous ?',
+    faq4_a:'AQA, Edexcel, OCR, WJEC, Cambridge IGCSE et IB dans les quatre langues.',
+    faq5_q:'Comment puis-je payer et quelle est votre politique d\'annulation ?',
+    faq5_a:'Paiement par virement ou PayPal. Annulation gratuite avec 24h de préavis. Sans contrat.',
+    faq6_q:'Fournissez-vous des matériaux et des devoirs ?',
+    faq6_a:'Oui — tout est inclus. Après chaque séance, j\'envoie un résumé PDF, des exercices et des ressources audio.',
+    contact_label:'Contactez-moi', contact_h2:'Commencez votre voyage linguistique',
+    contact_sub:'Prêt(e) à réserver votre cours d\'essai ? Remplissez le formulaire et je vous répondrai sous 24 heures.',
+    contact_info_title:'Parlons langues',
+    contact_email_label:'Email', contact_location_label:'Lieu', contact_hours_label:'Disponibilité',
+    contact_hours:'Lun–Sam, 8h–20h (GMT)',
+    form_name:'Votre nom', form_email:'Adresse email', form_language:'Langue souhaitée',
+    form_level:'Niveau actuel', form_message:'Votre message',
+    form_submit:'Envoyer', form_note:'Je réponds sous 24 heures. Vos données ne sont jamais partagées.',
+    footer_desc:'Cours particuliers en ligne de français, allemand, espagnol et portugais.',
+    footer_nav_title:'Navigation', footer_langs_title:'Langues', footer_contact_title:'Contact',
+    footer_contact_link:'Contact', footer_book_link:'Cours d\'essai gratuit',
+    footer_copy:'© 2025 Véronique Pimentel · Languages with Verone. Tous droits réservés.',
+    footer_quote:'Chaque langue que vous apprenez ouvre une nouvelle porte. — Anonyme'
+  },
+  de: {
+    nav_about:'Über mich', nav_languages:'Sprachen', nav_how:'Wie es funktioniert',
+    nav_testimonials:'Erfahrungen', nav_pricing:'Preise', nav_faq:'FAQ',
+    nav_cta:'Gratisstunde buchen',
+    hero_label:'Professionelle Sprachlehrerin',
+    hero_h1_top:'Ihr Tor zu',
+    hero_tagline:'Erlernen Sie Französisch, Deutsch, Spanisch und Portugiesisch mit einer qualifizierten, leidenschaftlichen Lehrerin — in Ihrem Tempo.',
+    hero_cta1:'Gratisstunde buchen', hero_cta2:'Sprachen entdecken',
+    scroll_label:'Scrollen',
+    about_label:'Über Véronique', about_h2:'Leidenschaft für Sprachen, Engagement für Sie',
+    about_lead:'"Sprachen sind nicht nur Wörter — sie sind Fenster in ganze Welten, Kulturen und Denkweisen."',
+    about_p1:'In Paris geboren und in vier europäischen Ländern gelebt, bringe ich eine authentische Perspektive in jeden Unterricht. Mit über 20 Jahren Erfahrung habe ich Hunderte von Schülern begleitet.',
+    about_p2:'Mein Ansatz verbindet konversationelle Immersion mit strukturierter Grammatik und passt jede Stunde an Ihre Ziele an.',
+    about_years_label:'Jahre Unterrichtserfahrung',
+    stat_students:'Schüler unterrichtet', stat_languages:'Sprachen', stat_pass:'Bestehensquote',
+    lang_label:'Was ich unterrichte', lang_h2:'Vier Sprachen, eine Expertin',
+    lang_sub:'Von der Mittelstufe bis zum Abitur, IB und darüber hinaus — strukturierter Unterricht für Selbstsicherheit.',
+    fr_selling:'Als Muttersprachlerin biete ich ein unvergleichliches authentisches Erlebnis, das weit über das Lehrbuch hinausgeht.',
+    de_selling:'Mein strukturierter Ansatz macht die berühmte Komplexität des Deutschen logisch und handhabbar.',
+    es_selling:'Konversationell von Tag eins — lernen Sie das Spanisch, das Muttersprachler wirklich sprechen.',
+    pt_selling:'Meistern Sie Europäisches und Brasilianisches Portugiesisch — Türen zu 260 Millionen Sprechern.',
+    how_label:'Der Prozess', how_h2:'Einfach. Strukturiert. Effektiv.',
+    how_sub:'Vom ersten Kontakt bis zur Flüssigkeit — so kommen wir gemeinsam ans Ziel.',
+    step1_title:'Gratis-Probestunde', step1_desc:'Eine entspannte 30-minütige Sitzung, um Ihr Niveau zu beurteilen und Ihre Ziele zu besprechen — völlig kostenlos und unverbindlich.',
+    step2_title:'Persönlicher Lernplan', step2_desc:'Ich entwerfe einen maßgeschneiderten Lernfahrplan, der auf Ihr Niveau, Ihren Lernstil und Ihren Zeitplan zugeschnitten ist.',
+    step3_title:'Wöchentliche Stunden', step3_desc:'Regelmäßige Online-Sitzungen per Videoanruf mit Ressourcen und Hausaufgaben nach jeder Stunde.',
+    testi_label:'Erfahrungsberichte', testi_h2:'Was meine Schüler sagen',
+    testi1_text:'"Véronique hat mein Französisch in nur sechs Monaten von C auf A* verbessert. Ihre Stunden sind strukturiert und herzlich."',
+    testi1_meta:'Britisch · A-Level Französisch · Note A*',
+    testi2_text:'"Ich brauchte Spanisch für einen beruflichen Umzug nach Madrid. Nach vier Monaten führte ich selbstbewusst Meetings auf Spanisch."',
+    testi2_meta:'Deutsch · Geschäftsspanisch · B2-Niveau',
+    testi3_text:'"Mein Sohn hatte große Schwierigkeiten mit GCSE Deutsch — Véroniques geduldiger Stil hat ihm enorm geholfen. Note 8!"',
+    testi3_meta:'Schwedisch · GCSE Deutsch (Sohn) · Note 8',
+    price_label:'Investition', price_h2:'Transparente, einfache Preise',
+    price_sub:'Alle Stunden finden online statt. Die erste Probestunde ist immer kostenlos.',
+    price1_name:'Einzelstunde', price_per_hr:'pro 60-Min-Sitzung',
+    pf1_1:'Einzelunterricht online', pf1_2:'Personalisierte Materialien', pf1_3:'Ressourcen nach dem Unterricht', pf1_4:'Alle Niveaus und Sprachen',
+    price2_name:'Monatspaket', price2_period:'4 Stunden pro Monat', price_recommended:'Am beliebtesten',
+    pf2_1:'Sparen Sie £40 vs. Einzelstunden', pf2_2:'Priorisierte Terminplanung', pf2_3:'Monatlicher Fortschrittsbericht', pf2_4:'WhatsApp-Support zwischen Stunden', pf2_5:'Prüfungsressourcen inklusive',
+    price2_note:'Kein Vertrag — jederzeit kündbar',
+    price3_name:'Intensivblock', price3_period:'8 Stunden — ideal zur Prüfungsvorbereitung',
+    pf3_1:'Sparen Sie £140', pf3_2:'Prüfungsspezifisches Coaching', pf3_3:'Probeprüfungen und Korrektur', pf3_4:'Aufzeichnung jeder Sitzung',
+    price3_note:'Ideal für GCSE/A-Level-Schüler',
+    price_btn_book:'Stunde buchen', price_btn_start:'Diesen Monat starten', price_btn_enquire:'Anfragen',
+    faq_label:'FAQ', faq_h2:'Ihre Fragen, unsere Antworten',
+    faq1_q:'Wie funktionieren Online-Stunden technisch?',
+    faq1_a:'Stunden finden per Zoom oder Google Meet statt. Sie erhalten vor jeder Sitzung einen Link. Ich verwende ein interaktives Whiteboard und Bildschirmfreigabe.',
+    faq2_q:'Welche Niveaus unterrichten Sie?',
+    faq2_a:'Alle Niveaus vom absoluten Anfänger bis zum Hochschulzulassungsniveau — Mittelschule, Gymnasium, IB und Erwachsene.',
+    faq3_q:'Kann ich zwei Sprachen gleichzeitig lernen?',
+    faq3_a:'Absolut. Viele Schüler studieren zwei Sprachen gleichzeitig. Ich nutze Gemeinsamkeiten zwischen den romanischen Sprachen.',
+    faq4_q:'Welche Prüfungsgremien decken Sie ab?',
+    faq4_a:'AQA, Edexcel, OCR, WJEC, Cambridge IGCSE und IB in allen vier Sprachen.',
+    faq5_q:'Wie zahle ich und was ist Ihre Stornierungsrichtlinie?',
+    faq5_a:'Zahlung per Überweisung oder PayPal. Kostenlose Stornierung mit 24h Vorlaufzeit. Kein Vertrag.',
+    faq6_q:'Stellen Sie Materialien und Hausaufgaben bereit?',
+    faq6_a:'Ja — alles inklusive. Nach jeder Stunde sende ich eine PDF-Zusammenfassung, Übungen und Audiomaterial.',
+    contact_label:'Kontakt', contact_h2:'Beginnen Sie Ihre Sprachreise heute',
+    contact_sub:'Bereit für Ihre Gratisstunde? Füllen Sie das Formular aus und ich melde mich innerhalb von 24 Stunden.',
+    contact_info_title:'Lassen Sie uns über Sprachen sprechen',
+    contact_email_label:'E-Mail', contact_location_label:'Standort', contact_hours_label:'Verfügbarkeit',
+    contact_hours:'Mo–Sa, 8–20 Uhr (GMT)',
+    form_name:'Ihr Name', form_email:'E-Mail-Adresse', form_language:'Gewünschte Sprache',
+    form_level:'Aktuelles Niveau', form_message:'Ihre Nachricht',
+    form_submit:'Anfrage senden', form_note:'Ich antworte innerhalb von 24 Stunden.',
+    footer_desc:'Professioneller Online-Unterricht in Französisch, Deutsch, Spanisch und Portugiesisch.',
+    footer_nav_title:'Navigation', footer_langs_title:'Sprachen', footer_contact_title:'Kontakt',
+    footer_contact_link:'Kontakt', footer_book_link:'Gratisstunde buchen',
+    footer_copy:'© 2025 Véronique Pimentel · Languages with Verone. Alle Rechte vorbehalten.',
+    footer_quote:'Jede Sprache, die du lernst, öffnet eine neue Tür. — Anonym'
+  },
+  es: {
+    nav_about:'Sobre mí', nav_languages:'Idiomas', nav_how:'Cómo funciona',
+    nav_testimonials:'Testimonios', nav_pricing:'Precios', nav_faq:'FAQ',
+    nav_cta:'Clase de prueba gratis',
+    hero_label:'Profesora de idiomas',
+    hero_h1_top:'Tu puerta de entrada a',
+    hero_tagline:'Aprende francés, alemán, español y portugués con una profesora cualificada y apasionada — a tu ritmo y en tu horario.',
+    hero_cta1:'Clase de prueba gratis', hero_cta2:'Explorar idiomas',
+    scroll_label:'Desplazarse',
+    about_label:'Sobre Véronique', about_h2:'Pasión por los idiomas, dedicación a ti',
+    about_lead:'"Los idiomas no son solo palabras — son ventanas a mundos enteros, culturas y formas de pensar."',
+    about_p1:'Nacida en París y habiendo vivido en cuatro países europeos, aporto una perspectiva auténtica e inmersiva a cada clase. Con más de 20 años de experiencia docente, he guiado a cientos de estudiantes.',
+    about_p2:'Mi enfoque combina inmersión conversacional con gramática estructurada, adaptando cada sesión a tus objetivos específicos.',
+    about_years_label:'Años de experiencia',
+    stat_students:'Estudiantes formados', stat_languages:'Idiomas', stat_pass:'Tasa de aprobados',
+    lang_label:'Lo que enseño', lang_h2:'Cuatro idiomas, una profesora experta',
+    lang_sub:'Desde secundaria hasta Bachillerato, IB y más allá — clases estructuradas diseñadas para inspirar confianza.',
+    fr_selling:'Como hablante nativa de francés, ofrezco una experiencia auténtica sin igual que va mucho más allá del libro de texto.',
+    de_selling:'Mi enfoque estructurado hace que la famosa complejidad del alemán parezca lógica y manejable.',
+    es_selling:'Conversacional desde el primer día — aprende el español que hablan los nativos de verdad.',
+    pt_selling:'Domina el portugués europeo y brasileño — abriendo puertas a 260 millones de hablantes.',
+    how_label:'El proceso', how_h2:'Simple. Estructurado. Efectivo.',
+    how_sub:'Desde el primer contacto hasta la fluidez — así llegamos juntos a la meta.',
+    step1_title:'Clase de prueba gratis', step1_desc:'Una sesión relajada de 30 minutos para evaluar tu nivel, hablar de tus objetivos — completamente gratis, sin compromiso.',
+    step2_title:'Plan personalizado', step2_desc:'Diseño un plan de aprendizaje a medida adaptado a tu nivel, estilo de aprendizaje y calendario.',
+    step3_title:'Sesiones semanales', step3_desc:'Clases online regulares por videollamada, con recursos y deberes enviados después de cada sesión.',
+    testi_label:'Testimonios', testi_h2:'Lo que dicen mis estudiantes',
+    testi1_text:'"Véronique transformó mi francés en solo seis meses. Sus clases son estructuradas pero maravillosamente cálidas."',
+    testi1_meta:'Británica · A-Level Francés · Nota A*',
+    testi2_text:'"Necesitaba español para un traslado laboral a Madrid. En cuatro meses, llevaba reuniones en español con confianza."',
+    testi2_meta:'Alemán · Español de negocios · Nivel B2',
+    testi3_text:'"Mi hijo tenía muchas dificultades con el alemán del GCSE — Véronique le ayudó a retomar el camino. ¡Sacó un Grade 8!"',
+    testi3_meta:'Sueca · GCSE Alemán (hijo) · Grade 8',
+    price_label:'Inversión', price_h2:'Precios transparentes y sencillos',
+    price_sub:'Todas las sesiones son online. La primera clase de prueba es siempre gratuita.',
+    price1_name:'Clase individual', price_per_hr:'por sesión de 60 min',
+    pf1_1:'Clase individual online', pf1_2:'Materiales personalizados', pf1_3:'Recursos post-clase', pf1_4:'Cualquier nivel e idioma',
+    price2_name:'Pack mensual', price2_period:'4 clases al mes', price_recommended:'El más popular',
+    pf2_1:'Ahorra £40 vs. clases individuales', pf2_2:'Prioridad en la planificación', pf2_3:'Informe de progreso mensual', pf2_4:'Soporte WhatsApp entre sesiones', pf2_5:'Recursos de examen incluidos',
+    price2_note:'Sin contrato — cancela cuando quieras',
+    price3_name:'Bloque intensivo', price3_period:'8 clases — ideal para exámenes',
+    pf3_1:'Ahorra £140', pf3_2:'Coaching específico para exámenes', pf3_3:'Exámenes de práctica y corrección', pf3_4:'Grabación de cada sesión',
+    price3_note:'Ideal para estudiantes de GCSE/A-Level',
+    price_btn_book:'Reservar una clase', price_btn_start:'Empezar este mes', price_btn_enquire:'Solicitar información',
+    faq_label:'FAQ', faq_h2:'Tus preguntas, respondidas',
+    faq1_q:'¿Cómo funcionan las clases online?',
+    faq1_a:'Las clases son por Zoom o Google Meet. Recibirás un enlace antes de cada sesión. Uso pizarra interactiva y pantalla compartida.',
+    faq2_q:'¿Qué niveles enseñas?',
+    faq2_a:'Todos los niveles desde principiante absoluto hasta acceso universitario — secundaria, bachillerato, IB y adultos.',
+    faq3_q:'¿Puedo aprender dos idiomas al mismo tiempo?',
+    faq3_a:'Por supuesto. Muchos estudiantes estudian dos idiomas simultáneamente. Aprovecho las similitudes entre las lenguas romances.',
+    faq4_q:'¿Qué organismos examinadores cubres?',
+    faq4_a:'AQA, Edexcel, OCR, WJEC, Cambridge IGCSE e IB en los cuatro idiomas.',
+    faq5_q:'¿Cómo pago y cuál es tu política de cancelación?',
+    faq5_a:'Pago por transferencia bancaria o PayPal. Cancelación gratuita con 24h de antelación. Sin contrato.',
+    faq6_q:'¿Proporcionas materiales y deberes?',
+    faq6_a:'Sí — todo incluido. Después de cada sesión envío un resumen en PDF, ejercicios y recursos de audio.',
+    contact_label:'Contacto', contact_h2:'Empieza tu viaje lingüístico hoy',
+    contact_sub:'¿Listo para tu clase de prueba? Rellena el formulario y te responderé en 24 horas.',
+    contact_info_title:'Hablemos de idiomas',
+    contact_email_label:'Email', contact_location_label:'Ubicación', contact_hours_label:'Disponibilidad',
+    contact_hours:'Lun–Sáb, 8h–20h (GMT)',
+    form_name:'Tu nombre', form_email:'Correo electrónico', form_language:'Idioma de interés',
+    form_level:'Nivel actual', form_message:'Tu mensaje',
+    form_submit:'Enviar consulta', form_note:'Respondo en 24 horas. Tus datos no se comparten.',
+    footer_desc:'Clases particulares online de francés, alemán, español y portugués.',
+    footer_nav_title:'Navegación', footer_langs_title:'Idiomas', footer_contact_title:'Contacto',
+    footer_contact_link:'Contacto', footer_book_link:'Clase de prueba gratis',
+    footer_copy:'© 2025 Véronique Pimentel · Languages with Verone. Todos los derechos reservados.',
+    footer_quote:'Cada idioma que aprendes abre una nueva puerta. — Anónimo'
+  },
+  pt: {
+    nav_about:'Sobre mim', nav_languages:'Idiomas', nav_how:'Como funciona',
+    nav_testimonials:'Testemunhos', nav_pricing:'Preços', nav_faq:'FAQ',
+    nav_cta:'Aula experimental grátis',
+    hero_label:'Professora de idiomas',
+    hero_h1_top:'A sua porta de entrada para',
+    hero_tagline:'Aprenda francês, alemão, espanhol e português com uma professora qualificada e apaixonada — ao seu ritmo e horário.',
+    hero_cta1:'Aula experimental grátis', hero_cta2:'Explorar idiomas',
+    scroll_label:'Rolar',
+    about_label:'Sobre a Véronique', about_h2:'Paixão pelos idiomas, dedicação a si',
+    about_lead:'"Os idiomas não são apenas palavras — são janelas para mundos inteiros, culturas e formas de pensar."',
+    about_p1:'Nascida em Paris e tendo vivido em quatro países europeus, trago uma perspetiva autêntica e imersiva a cada aula. Com mais de 20 anos de experiência, guiei centenas de alunos.',
+    about_p2:'A minha abordagem combina imersão conversacional com gramática estruturada, adaptando cada sessão aos seus objetivos específicos.',
+    about_years_label:'Anos de experiência',
+    stat_students:'Alunos ensinados', stat_languages:'Idiomas', stat_pass:'Taxa de aprovação',
+    lang_label:'O que ensino', lang_h2:'Quatro idiomas, uma professora especialista',
+    lang_sub:'Desde o ensino básico ao A-Level, IB e além — aulas estruturadas para inspirar confiança.',
+    fr_selling:'Como falante nativa de francês, ofereço uma experiência autêntica inigualável que vai muito além do manual.',
+    de_selling:'A minha abordagem estruturada torna a complexidade do alemão lógica e acessível.',
+    es_selling:'Conversacional desde o primeiro dia — aprenda o espanhol que os nativos realmente falam.',
+    pt_selling:'Domine o português europeu e brasileiro — abrindo portas para 260 milhões de falantes.',
+    how_label:'O processo', how_h2:'Simples. Estruturado. Eficaz.',
+    how_sub:'Do primeiro contacto à fluência — aqui está como chegamos lá juntos.',
+    step1_title:'Aula experimental grátis', step1_desc:'Uma sessão descontraída de 30 minutos para avaliar o seu nível e discutir os seus objetivos — completamente gratuita, sem compromisso.',
+    step2_title:'Plano personalizado', step2_desc:'Desenho um roteiro de aprendizagem à medida adaptado ao seu nível, estilo de aprendizagem e calendário.',
+    step3_title:'Sessões semanais', step3_desc:'Aulas online regulares por videochamada, com recursos e trabalhos de casa enviados após cada sessão.',
+    testi_label:'Testemunhos', testi_h2:'O que dizem os meus alunos',
+    testi1_text:'"A Véronique transformou o meu francês em apenas seis meses. As suas aulas são estruturadas mas maravilhosamente acolhedoras."',
+    testi1_meta:'Britânica · A-Level Francês · Nota A*',
+    testi2_text:'"Precisava de espanhol para uma transferência de trabalho para Madrid. Em quatro meses, conduzia reuniões em espanhol com confiança."',
+    testi2_meta:'Alemão · Espanhol de negócios · Nível B2',
+    testi3_text:'"O meu filho tinha muitas dificuldades com o alemão do GCSE — a Véronique ajudou-o a recuperar. Tirou Nota 8!"',
+    testi3_meta:'Sueca · GCSE Alemão (filho) · Nota 8',
+    price_label:'Investimento', price_h2:'Preços transparentes e simples',
+    price_sub:'Todas as sessões são online. A primeira aula experimental é sempre gratuita.',
+    price1_name:'Aula individual', price_per_hr:'por sessão de 60 min',
+    pf1_1:'Aula individual online', pf1_2:'Materiais personalizados', pf1_3:'Recursos pós-aula', pf1_4:'Qualquer nível e idioma',
+    price2_name:'Pack mensal', price2_period:'4 aulas por mês', price_recommended:'Mais popular',
+    pf2_1:'Poupe £40 vs. aulas individuais', pf2_2:'Agendamento prioritário', pf2_3:'Relatório de progresso mensal', pf2_4:'Suporte WhatsApp entre sessões', pf2_5:'Recursos de exame incluídos',
+    price2_note:'Sem contrato — cancele quando quiser',
+    price3_name:'Bloco intensivo', price3_period:'8 aulas — ideal para preparação de exames',
+    pf3_1:'Poupe £140', pf3_2:'Coaching específico para exames', pf3_3:'Exames de prática e correção', pf3_4:'Gravação de cada sessão',
+    price3_note:'Ideal para alunos de GCSE/A-Level',
+    price_btn_book:'Reservar uma aula', price_btn_start:'Começar este mês', price_btn_enquire:'Saber mais',
+    faq_label:'FAQ', faq_h2:'As suas perguntas, respondidas',
+    faq1_q:'Como funcionam as aulas online?',
+    faq1_a:'As aulas são via Zoom ou Google Meet. Receberá um link antes de cada sessão. Uso quadro interativo e partilha de ecrã.',
+    faq2_q:'Que níveis ensina?',
+    faq2_a:'Todos os níveis, do iniciante absoluto ao acesso universitário — ensino básico, secundário, IB e adultos.',
+    faq3_q:'Posso aprender dois idiomas ao mesmo tempo?',
+    faq3_a:'Claro. Muitos alunos estudam dois idiomas simultaneamente. Aproveito as semelhanças entre as línguas românicas.',
+    faq4_q:'Que organismos de exame cobre?',
+    faq4_a:'AQA, Edexcel, OCR, WJEC, Cambridge IGCSE e IB nos quatro idiomas.',
+    faq5_q:'Como pago e qual é a política de cancelamento?',
+    faq5_a:'Pagamento por transferência bancária ou PayPal. Cancelamento gratuito com 24h de antecedência. Sem contrato.',
+    faq6_q:'Fornece materiais e trabalhos de casa?',
+    faq6_a:'Sim — tudo incluído. Após cada sessão envio um resumo em PDF, exercícios e recursos de áudio.',
+    contact_label:'Contacto', contact_h2:'Comece a sua jornada linguística hoje',
+    contact_sub:'Pronto para a sua aula experimental? Preencha o formulário e responderei em 24 horas.',
+    contact_info_title:'Vamos falar de idiomas',
+    contact_email_label:'Email', contact_location_label:'Localização', contact_hours_label:'Disponibilidade',
+    contact_hours:'Seg–Sáb, 8h–20h (GMT)',
+    form_name:'O seu nome', form_email:'Endereço de email', form_language:'Idioma de interesse',
+    form_level:'Nível atual', form_message:'A sua mensagem',
+    form_submit:'Enviar consulta', form_note:'Respondo em 24 horas. Os seus dados nunca são partilhados.',
+    footer_desc:'Explicações online de francês, alemão, espanhol e português.',
+    footer_nav_title:'Navegação', footer_langs_title:'Idiomas', footer_contact_title:'Contacto',
+    footer_contact_link:'Contacto', footer_book_link:'Aula experimental grátis',
+    footer_copy:'© 2025 Véronique Pimentel · Languages with Verone. Todos os direitos reservados.',
+    footer_quote:'Cada idioma que aprende abre uma nova porta. — Anónimo'
+  }
+};
+
+let currentLang = 'en';
+
+function setLang(lang) {
+  currentLang = lang;
+  const t = i18n[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+  document.querySelectorAll('.lang-switcher button').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
+  });
+  document.documentElement.lang = lang;
+}
+
+/* === NAV SCROLL === */
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+}, {passive:true});
+
+/* === MOBILE MENU === */
+function toggleMenu() {
+  const menu = document.getElementById('mobileNav');
+  const btn = document.querySelector('.hamburger');
+  const isOpen = menu.classList.toggle('open');
+  btn.classList.toggle('open', isOpen);
+  btn.setAttribute('aria-expanded', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+}
+
+/* === FAQ ACCORDION === */
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.toggle('open');
+  btn.setAttribute('aria-expanded', isOpen);
+}
+
+/* === SCROLL REVEAL === */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObserver.unobserve(e.target);
+    }
+  });
+}, {threshold: 0.12, rootMargin: '0px 0px -40px 0px'});
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+/* === FORM SUBMIT === */
+function submitForm() {
+  const name = document.getElementById('form-name').value.trim();
+  const email = document.getElementById('form-email').value.trim();
+  const lang = document.getElementById('form-language').value;
+  const level = document.getElementById('form-level').value;
+  const msg = document.getElementById('form-message').value.trim();
+  if (!name || !email) {
+    alert('Please fill in your name and email.');
+    return;
+  }
+  const body = encodeURIComponent(`Name: ${name}\nLanguage: ${lang}\nLevel: ${level}\n\n${msg}`);
+  const subject = encodeURIComponent(`Language Tuition Enquiry — ${lang || 'General'}`);
+  window.location.href = `mailto:verone@languageswithverone.com?subject=${subject}&body=${body}`;
+}
+
+/* === SMOOTH ACTIVE NAV ON SCROLL === */
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 120) cur = s.id;
+  });
+  navLinks.forEach(a => {
+    a.style.color = a.getAttribute('href') === `#${cur}` ? 'var(--primary)' : '';
+  });
+}, {passive:true});
+</script>
+</body>
+</html>
