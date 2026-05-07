@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Veronique Pimentel — Professional online language tutor. French, German, Spanish &amp; Portuguese. 15+ years experience. PGCE qualified. Book a free trial.">
+<title>Veronique Pimentel | Language Tutor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary:   #1e3a5f;
+  --secondary: #c9a96e;
+  --accent:    #e07b54;
+  --bg:        #faf9f5;
+  --text:      #2a2a2a;
+  --card-bg:   #ffffff;
+  --nav-h:     72px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Lato', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── TYPOGRAPHY ─────────────────────────────── */
+h1, h2, h3, h4 { font-family: 'Cormorant Garamond', serif; font-weight: 600; line-height: 1.15; }
+h1 { font-size: clamp(2.8rem, 6vw, 5.5rem); }
+h2 { font-size: clamp(2rem, 4vw, 3rem); }
+h3 { font-size: clamp(1.4rem, 2.5vw, 1.9rem); }
+
+.section-label {
+  font-family: 'Lato', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--secondary);
+  display: block;
+  margin-bottom: 0.6rem;
+}
+
+/* ── LAYOUT ─────────────────────────────────── */
+.container { max-width: 1180px; margin: 0 auto; padding: 0 1.5rem; }
+section { padding: 6rem 0; }
+section:nth-child(odd) { background: var(--bg); }
+section:nth-child(even) { background: #f0ede6; }
+
+/* ── NAV ─────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  height: var(--nav-h);
+  background: rgba(30, 58, 95, 0.97);
+  backdrop-filter: blur(12px);
+  display: flex; align-items: center;
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 1.5rem;
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: 0.03em;
+}
+.nav-logo span { color: var(--secondary); }
+.nav-links {
+  display: none;
+  list-style: none;
+  gap: 2rem;
+  align-items: center;
+}
+.nav-links a {
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  position: relative;
+  padding-bottom: 3px;
+  transition: color 0.25s;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0;
+  width: 0; height: 1.5px;
+  background: var(--secondary);
+  transition: width 0.3s ease;
+}
+.nav-links a:hover { color: #fff; }
+.nav-links a:hover::after { width: 100%; }
+
+/* Language switcher */
+.lang-switcher {
+  display: flex; gap: 0.3rem; align-items: center;
+}
+.lang-btn {
+  background: none; border: 1px solid rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.7);
+  padding: 0.2rem 0.5rem;
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer; border-radius: 3px;
+  transition: all 0.2s;
+}
+.lang-btn:hover, .lang-btn.active {
+  background: var(--secondary);
+  border-color: var(--secondary);
+  color: var(--primary);
+}
+.nav-cta {
+  background: var(--secondary); color: var(--primary);
+  padding: 0.55rem 1.3rem;
+  border-radius: 3px; font-size: 0.8rem;
+  font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; text-decoration: none;
+  transition: background 0.25s, transform 0.2s;
+  display: none;
+}
+.nav-cta:hover { background: #e0b97e; transform: translateY(-1px); }
+
+/* Hamburger */
+.hamburger {
+  display: flex; flex-direction: column; gap: 5px;
+  background: none; border: none; cursor: pointer; padding: 4px;
+}
+.hamburger span {
+  display: block; width: 24px; height: 2px;
+  background: #fff; border-radius: 2px;
+  transition: all 0.3s;
+}
+.mobile-menu {
+  display: none;
+  position: fixed; top: var(--nav-h); left: 0; right: 0;
+  background: var(--primary);
+  padding: 1.5rem;
+  z-index: 999;
+  flex-direction: column;
+  gap: 1rem;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  color: rgba(255,255,255,0.9);
+  text-decoration: none; font-weight: 700;
+  font-size: 0.9rem; letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+/* ── HERO ─────────────────────────────────────── */
+#hero {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f2340 0%, #1e3a5f 45%, #2a4f7a 100%);
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+  padding: calc(var(--nav-h) + 3rem) 1.5rem 5rem;
+  position: relative;
+  overflow: hidden;
+}
+#hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a96e' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-flags {
+  display: flex; gap: 0.8rem; justify-content: center; margin-bottom: 2rem;
+  font-size: 2.2rem; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
+}
+.hero-flag {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 52px; height: 52px;
+  border: 2px solid rgba(201,169,110,0.4);
+  border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(4px);
+  font-size: 1.6rem;
+  animation: floatFlag 3s ease-in-out infinite;
+}
+.hero-flag:nth-child(2) { animation-delay: 0.5s; }
+.hero-flag:nth-child(3) { animation-delay: 1s; }
+.hero-flag:nth-child(4) { animation-delay: 1.5s; }
+@keyframes floatFlag {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.hero-pretitle {
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--secondary);
+  margin-bottom: 1rem;
+}
+#hero h1 {
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+#hero h1 .name { color: var(--secondary); display: block; }
+.hero-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.1rem, 2.5vw, 1.55rem);
+  color: rgba(255,255,255,0.82);
+  font-style: italic;
+  font-weight: 300;
+  margin-bottom: 2.5rem;
+  max-width: 620px;
+  margin-left: auto; margin-right: auto;
+}
+.hero-buttons {
+  display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;
+}
+.btn-primary {
+  background: var(--secondary); color: var(--primary);
+  padding: 0.9rem 2.2rem;
+  border-radius: 4px; font-weight: 700;
+  font-size: 0.88rem; letter-spacing: 0.1em;
+  text-transform: uppercase; text-decoration: none;
+  border: none; cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 4px 20px rgba(201,169,110,0.35);
+}
+.btn-primary:hover {
+  background: #e0c080; transform: translateY(-2px);
+  box-shadow: 0 6px 28px rgba(201,169,110,0.5);
+}
+.btn-outline {
+  background: transparent; color: #fff;
+  padding: 0.9rem 2.2rem; border-radius: 4px;
+  font-weight: 700; font-size: 0.88rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer;
+  border: 2px solid rgba(255,255,255,0.5);
+  transition: all 0.25s;
+}
+.btn-outline:hover {
+  border-color: var(--secondary); color: var(--secondary);
+  transform: translateY(-2px);
+}
+.hero-stats {
+  display: flex; gap: 2.5rem; justify-content: center; margin-top: 3.5rem;
+  flex-wrap: wrap;
+}
+.hero-stat { text-align: center; }
+.hero-stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.4rem; font-weight: 700; color: var(--secondary);
+  line-height: 1;
+}
+.hero-stat-label {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em;
+  text-transform: uppercase; color: rgba(255,255,255,0.6);
+  margin-top: 0.3rem;
+}
+
+/* ── ABOUT ────────────────────────────────────── */
+#about .about-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+.about-photo-wrap {
+  position: relative; display: flex; justify-content: center;
+}
+.about-photo {
+  width: 300px; height: 300px; border-radius: 50%;
+  object-fit: cover; object-position: center top;
+  border: 6px solid var(--secondary);
+  box-shadow: 0 12px 40px rgba(30,58,95,0.2);
+  position: relative; z-index: 1;
+}
+.about-photo-ring {
+  position: absolute;
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  border: 2px dashed var(--secondary);
+  opacity: 0.35;
+  animation: spin 30s linear infinite;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+@keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+.about-badge {
+  position: absolute;
+  bottom: 10px; right: calc(50% - 180px);
+  background: var(--primary); color: var(--secondary);
+  padding: 0.5rem 1rem; border-radius: 30px;
+  font-size: 0.78rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  box-shadow: 0 4px 16px rgba(30,58,95,0.3);
+  z-index: 2;
+}
+.about-text p { margin-bottom: 1.3rem; font-size: 1.05rem; color: #444; }
+.about-pills {
+  display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem;
+}
+.pill {
+  background: var(--primary); color: var(--secondary);
+  padding: 0.4rem 1rem; border-radius: 30px;
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em;
+}
+
+/* ── LANGUAGES ────────────────────────────────── */
+#languages { background: var(--primary) !important; }
+#languages h2, #languages .section-label { color: #fff; }
+.lang-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+.lang-card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(201,169,110,0.25);
+  border-radius: 12px;
+  padding: 2rem;
+  transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+  position: relative; overflow: hidden;
+}
+.lang-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 4px; height: 100%;
+  background: var(--secondary);
+  border-radius: 12px 0 0 12px;
+}
+.lang-card:hover {
+  transform: translateY(-6px);
+  background: rgba(255,255,255,0.1);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+}
+.lang-card-flag { font-size: 2.8rem; margin-bottom: 0.8rem; }
+.lang-card-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.9rem; font-weight: 700;
+  color: var(--secondary); margin-bottom: 0.4rem;
+}
+.lang-card-levels {
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: rgba(255,255,255,0.55);
+  margin-bottom: 1rem;
+}
+.lang-card-desc { color: rgba(255,255,255,0.82); font-size: 0.97rem; }
+
+/* ── HOW IT WORKS ─────────────────────────────── */
+.steps {
+  display: grid; grid-template-columns: 1fr;
+  gap: 2rem; margin-top: 3.5rem;
+  position: relative;
+}
+.step {
+  display: flex; gap: 1.5rem; align-items: flex-start;
+}
+.step-num {
+  flex-shrink: 0;
+  width: 54px; height: 54px;
+  border-radius: 50%;
+  background: var(--primary); color: var(--secondary);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid var(--secondary);
+  box-shadow: 0 4px 16px rgba(30,58,95,0.15);
+}
+.step-body h3 { margin-bottom: 0.4rem; color: var(--primary); }
+.step-body p { color: #555; }
+
+/* ── TESTIMONIALS ─────────────────────────────── */
+#testimonials { background: #f0ede6 !important; }
+.testi-grid {
+  display: grid; grid-template-columns: 1fr;
+  gap: 1.5rem; margin-top: 3rem;
+}
+.testi-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 24px rgba(30,58,95,0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+}
+.testi-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(30,58,95,0.14);
+}
+.testi-card::before {
+  content: '\201C';
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 5rem; line-height: 1;
+  color: var(--secondary); opacity: 0.3;
+  position: absolute; top: 0.5rem; left: 1.2rem;
+}
+.stars { color: #f5a623; font-size: 1rem; margin-bottom: 0.8rem; }
+.testi-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem; font-style: italic;
+  color: var(--text); line-height: 1.6;
+  margin-bottom: 1.2rem;
+}
+.testi-meta {
+  display: flex; align-items: center; gap: 0.8rem;
+}
+.testi-avatar {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--primary);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--secondary); font-weight: 700; font-size: 0.85rem;
+  font-family: 'Cormorant Garamond', serif; font-size: 1.1rem;
+  flex-shrink: 0;
+}
+.testi-name { font-weight: 700; font-size: 0.9rem; color: var(--primary); }
+.testi-detail { font-size: 0.8rem; color: #888; }
+
+/* ── PRICING ──────────────────────────────────── */
+.pricing-grid {
+  display: grid; grid-template-columns: 1fr;
+  gap: 1.5rem; margin-top: 3rem;
+}
+.price-card {
+  background: var(--card-bg);
+  border: 2px solid #e8e4db;
+  border-radius: 12px; padding: 2.5rem 2rem;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+}
+.price-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(30,58,95,0.1);
+}
+.price-card.featured {
+  border-color: var(--secondary);
+  background: var(--primary); color: #fff;
+}
+.price-badge {
+  position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+  background: var(--secondary); color: var(--primary);
+  padding: 0.3rem 1.2rem; border-radius: 30px;
+  font-size: 0.72rem; font-weight: 900; letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.price-tier {
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--secondary);
+  margin-bottom: 0.5rem;
+}
+.price-card:not(.featured) .price-tier { color: var(--primary); }
+.price-amount {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.2rem; font-weight: 700; line-height: 1;
+  color: var(--secondary);
+  margin: 0.8rem 0 0.3rem;
+}
+.price-card:not(.featured) .price-amount { color: var(--primary); }
+.price-per { font-size: 0.82rem; color: #aaa; margin-bottom: 1.5rem; }
+.price-card.featured .price-per { color: rgba(255,255,255,0.6); }
+.price-features {
+  list-style: none; text-align: left;
+  margin-bottom: 2rem; display: flex; flex-direction: column; gap: 0.6rem;
+}
+.price-features li {
+  font-size: 0.92rem; display: flex; gap: 0.6rem; align-items: flex-start;
+}
+.price-features li::before {
+  content: '✓'; color: var(--secondary); font-weight: 700; flex-shrink: 0;
+}
+.price-card.featured .price-features li { color: rgba(255,255,255,0.85); }
+
+/* ── FAQ ──────────────────────────────────────── */
+#faq { background: var(--bg) !important; }
+.faq-list {
+  max-width: 780px; margin: 3rem auto 0;
+  display: flex; flex-direction: column; gap: 0.8rem;
+}
+.faq-item {
+  background: var(--card-bg);
+  border: 1px solid #e8e4db;
+  border-radius: 8px; overflow: hidden;
+}
+.faq-q {
+  width: 100%; background: none; border: none;
+  padding: 1.3rem 1.5rem;
+  text-align: left; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 1rem;
+  font-family: 'Lato', sans-serif; font-size: 1rem; font-weight: 700;
+  color: var(--primary);
+  transition: background 0.2s;
+}
+.faq-q:hover { background: #f6f3ec; }
+.faq-icon {
+  flex-shrink: 0; width: 22px; height: 22px;
+  border-radius: 50%; border: 2px solid var(--secondary);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; color: var(--secondary);
+  transition: transform 0.3s;
+}
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+.faq-a {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.3s;
+  padding: 0 1.5rem;
+  font-size: 0.97rem; color: #555; line-height: 1.75;
+}
+.faq-item.open .faq-a { max-height: 400px; padding: 0 1.5rem 1.3rem; }
+
+/* ── CONTACT ──────────────────────────────────── */
+#contact { background: var(--primary) !important; }
+#contact h2, #contact .section-label { color: #fff; }
+#contact .contact-sub {
+  color: rgba(255,255,255,0.75); font-size: 1.05rem;
+  max-width: 560px; margin: 1rem auto 3rem;
+  text-align: center;
+}
+.contact-grid {
+  display: grid; grid-template-columns: 1fr;
+  gap: 3rem; align-items: start;
+}
+.contact-form {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(201,169,110,0.2);
+  border-radius: 12px; padding: 2.5rem;
+}
+.form-row { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+.form-group label {
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: rgba(255,255,255,0.7);
+}
+.form-group input, .form-group select, .form-group textarea {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(201,169,110,0.3);
+  border-radius: 6px; padding: 0.85rem 1rem;
+  color: #fff; font-size: 0.97rem; font-family: 'Lato', sans-serif;
+  outline: none; transition: border-color 0.25s;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  border-color: var(--secondary);
+}
+.form-group textarea { resize: vertical; min-height: 120px; }
+.form-group select option { background: var(--primary); }
+.contact-info { color: rgba(255,255,255,0.8); }
+.contact-info h3 { color: var(--secondary); font-size: 1.5rem; margin-bottom: 1.5rem; }
+.contact-item {
+  display: flex; gap: 1rem; align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+.contact-icon {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1.5px solid var(--secondary);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; flex-shrink: 0;
+}
+.contact-item p { font-size: 0.95rem; line-height: 1.5; }
+.contact-item a {
+  color: var(--secondary); text-decoration: none;
+  transition: opacity 0.2s;
+}
+.contact-item a:hover { opacity: 0.8; }
+
+/* ── FOOTER ───────────────────────────────────── */
+footer {
+  background: #0f2340;
+  color: rgba(255,255,255,0.65);
+  padding: 4rem 0 2rem;
+}
+.footer-grid {
+  display: grid; grid-template-columns: 1fr;
+  gap: 3rem; margin-bottom: 3rem;
+}
+.footer-brand .nav-logo { font-size: 1.5rem; display: inline-block; margin-bottom: 1rem; }
+.footer-brand p { font-size: 0.9rem; line-height: 1.7; max-width: 320px; }
+.footer-langs h4 { color: var(--secondary); margin-bottom: 1rem; font-size: 1.1rem; }
+.footer-langs ul { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+.footer-langs li { font-size: 0.9rem; }
+.footer-quote-block {
+  border-left: 3px solid var(--secondary);
+  padding-left: 1.2rem;
+}
+.footer-quote-block p {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; font-size: 1rem;
+  margin-bottom: 0.5rem; color: rgba(255,255,255,0.8);
+}
+.footer-quote-block span { font-size: 0.75rem; color: rgba(255,255,255,0.45); }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 1.5rem;
+  display: flex; flex-wrap: wrap;
+  justify-content: space-between; align-items: center;
+  gap: 1rem; font-size: 0.82rem;
+}
+
+/* ── SCROLL REVEAL ────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ── TEXT ALIGN ───────────────────────────────── */
+.text-center { text-align: center; }
+
+/* ── RESPONSIVE 768px ─────────────────────────── */
+@media (min-width: 768px) {
+  .nav-links { display: flex; }
+  .nav-cta { display: inline-flex; align-items: center; }
+  .hamburger { display: none; }
+  #about .about-grid { grid-template-columns: 1fr 1.5fr; }
+  .lang-grid { grid-template-columns: repeat(2, 1fr); }
+  .steps { grid-template-columns: repeat(3, 1fr); gap: 2.5rem; }
+  .step { flex-direction: column; }
+  .testi-grid { grid-template-columns: repeat(3, 1fr); }
+  .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+  .form-row { grid-template-columns: 1fr 1fr; }
+  .contact-grid { grid-template-columns: 1.2fr 1fr; }
+  .footer-grid { grid-template-columns: 1.5fr 1fr 1.2fr; }
+  .footer-langs ul { flex-direction: column; }
+}
+
+/* ── RESPONSIVE 1200px ────────────────────────── */
+@media (min-width: 1200px) {
+  .lang-grid { grid-template-columns: repeat(4, 1fr); }
+  .pricing-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ── REDUCED MOTION ───────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- SECTION: Navigation -->
+<nav role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">Véronique <span>Pimentel</span></a>
+    <ul class="nav-links" role="list">
+      <li><a href="#about" data-i18n="nav_about">About</a></li>
+      <li><a href="#languages" data-i18n="nav_languages">Languages</a></li>
+      <li><a href="#how" data-i18n="nav_how">How It Works</a></li>
+      <li><a href="#pricing" data-i18n="nav_pricing">Pricing</a></li>
+      <li><a href="#faq" data-i18n="nav_faq">FAQ</a></li>
+      <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:0.8rem;">
+      <div class="lang-switcher" role="group" aria-label="Language switcher">
+        <button class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+        <button class="lang-btn" data-lang="fr" aria-pressed="false">FR</button>
+        <button class="lang-btn" data-lang="de" aria-pressed="false">DE</button>
+        <button class="lang-btn" data-lang="es" aria-pressed="false">ES</button>
+        <button class="lang-btn" data-lang="pt" aria-pressed="false">PT</button>
+      </div>
+      <a href="#contact" class="nav-cta" data-i18n="nav_book">Book Trial</a>
+      <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" id="hamburger">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
+  <a href="#about" data-i18n="nav_about">About</a>
+  <a href="#languages" data-i18n="nav_languages">Languages</a>
+  <a href="#how" data-i18n="nav_how">How It Works</a>
+  <a href="#pricing" data-i18n="nav_pricing">Pricing</a>
+  <a href="#faq" data-i18n="nav_faq">FAQ</a>
+  <a href="#contact" data-i18n="nav_contact">Contact</a>
+</div>
+
+<!-- SECTION: Hero -->
+<section id="hero" aria-label="Hero">
+  <div class="container">
+    <div class="hero-flags" aria-hidden="true">
+      <span class="hero-flag" title="French">🇫🇷</span>
+      <span class="hero-flag" title="German">🇩🇪</span>
+      <span class="hero-flag" title="Spanish">🇪🇸</span>
+      <span class="hero-flag" title="Portuguese">🇵🇹</span>
+    </div>
+    <p class="hero-pretitle" data-i18n="hero_pretitle">Online Language Tutor · London</p>
+    <h1>
+      <span data-i18n="hero_name">Véronique</span>
+      <span class="name">Pimentel</span>
+    </h1>
+    <p class="hero-tagline" data-i18n="hero_tagline">Unlock 4 Languages. One Expert Tutor. Your Pace.</p>
+    <div class="hero-buttons">
+      <a href="#contact" class="btn-primary" data-i18n="hero_cta1">Book a Free Trial</a>
+      <a href="#about" class="btn-outline" data-i18n="hero_cta2">Discover My Method</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">15+</div>
+        <div class="hero-stat-label" data-i18n="stat_years">Years Experience</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">4</div>
+        <div class="hero-stat-label" data-i18n="stat_langs">Languages Taught</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">41</div>
+        <div class="hero-stat-label" data-i18n="stat_reviews">5-Star Reviews</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">★ 5</div>
+        <div class="hero-stat-label" data-i18n="stat_rating">First Tutors Rating</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: About -->
+<section id="about" aria-label="About Veronique">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-photo-wrap reveal">
+        <img
+          src="data:image/jpeg;base64,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"
+          alt="Véronique Pimentel — Language Tutor"
+          class="about-photo"
+          width="300" height="300"
+        >
+        <div class="about-photo-ring" aria-hidden="true"></div>
+        <div class="about-badge" aria-label="PGCE Qualified">PGCE Qualified</div>
+      </div>
+      <div class="about-text">
+        <span class="section-label" data-i18n="about_label">About Me</span>
+        <h2 data-i18n="about_heading">A Passion for Languages. A Gift for Teaching.</h2>
+        <p data-i18n="about_p1">I am a native French speaker and qualified Advanced Skills Teacher with over 15 years' experience teaching in London secondary schools. I have also trained fellow teachers to teach French, Spanish and German at all levels — and I speak 5 languages fluently.</p>
+        <p data-i18n="about_p2">As a former examiner for one of England's main Exam Boards, I bring unique insight into exactly what assessors look for. My students consistently make rapid, measurable progress — often within the very first lesson.</p>
+        <p data-i18n="about_p3">I follow a revolutionary teaching method that demystifies languages and makes them genuinely accessible. GCSE students regularly achieve Grade 9 writing after just one year. If you are not satisfied with your progress in the first lesson, I will refund the cost in full.</p>
+        <p data-i18n="about_p4">Each learner is different, and I adapt every session to the individual — something a classroom simply cannot offer. Seeing my students gain confidence is the greatest reward.</p>
+        <div class="about-pills">
+          <span class="pill">PGCE Languages</span>
+          <span class="pill">Advanced Skills Teacher</span>
+          <span class="pill">Ex-Exam Board Examiner</span>
+          <span class="pill">15+ Years Experience</span>
+          <span class="pill">5 Languages Spoken</span>
+          <span class="pill">Native French Speaker</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: Languages -->
+<section id="languages" aria-label="Languages offered">
+  <div class="container">
+    <div class="text-center reveal">
+      <span class="section-label" data-i18n="lang_label">What I Teach</span>
+      <h2 data-i18n="lang_heading">Four Languages, One Exceptional Tutor</h2>
+    </div>
+    <div class="lang-grid">
+      <div class="lang-card reveal reveal-delay-1">
+        <div class="lang-card-flag">🇫🇷</div>
+        <div class="lang-card-name">Français</div>
+        <div class="lang-card-levels" data-i18n="levels_all">KS3 · KS4 · KS5 · GCSE · IGCSE · IB · A-Level · University</div>
+        <p class="lang-card-desc" data-i18n="fr_desc">As a native French speaker with examiner experience, Véronique gives students a decisive advantage — her pupils regularly achieve Grade 9 at GCSE and top marks at A-Level.</p>
+      </div>
+      <div class="lang-card reveal reveal-delay-2">
+        <div class="lang-card-flag">🇩🇪</div>
+        <div class="lang-card-name">Deutsch</div>
+        <div class="lang-card-levels" data-i18n="levels_gcse">KS3 · KS4 · GCSE · A-Level</div>
+        <p class="lang-card-desc" data-i18n="de_desc">German grammar is demystified through a structured, logical approach that builds confidence quickly — students report feeling far more capable after just a few sessions.</p>
+      </div>
+      <div class="lang-card reveal reveal-delay-3">
+        <div class="lang-card-flag">🇪🇸</div>
+        <div class="lang-card-name">Español</div>
+        <div class="lang-card-levels" data-i18n="levels_all">KS3 · KS4 · KS5 · GCSE · IGCSE · IB · A-Level · University</div>
+        <p class="lang-card-desc" data-i18n="es_desc">Spanish comes alive through rich cultural immersion and exam-focused techniques — the ideal combination for students aiming at top GCSE and IB grades.</p>
+      </div>
+      <div class="lang-card reveal reveal-delay-4">
+        <div class="lang-card-flag">🇵🇹</div>
+        <div class="lang-card-name">Português</div>
+        <div class="lang-card-levels" data-i18n="levels_conversational">All Levels · Conversational · Business</div>
+        <p class="lang-card-desc" data-i18n="pt_desc">From European Portuguese to Brazilian nuances, Véronique tailors lessons to your specific goals — whether travel, business, or achieving fluency for personal enrichment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: How It Works -->
+<section id="how" aria-label="How it works">
+  <div class="container">
+    <div class="text-center reveal">
+      <span class="section-label" data-i18n="how_label">The Journey</span>
+      <h2 data-i18n="how_heading">Three Steps to Fluency</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal reveal-delay-1">
+        <div class="step-num" aria-hidden="true">1</div>
+        <div class="step-body">
+          <h3 data-i18n="step1_title">Free Trial Lesson</h3>
+          <p data-i18n="step1_desc">We begin with a complimentary 60-minute session to assess your current level, identify goals, and let you experience Véronique's unique teaching method — completely risk-free.</p>
+        </div>
+      </div>
+      <div class="step reveal reveal-delay-2">
+        <div class="step-num" aria-hidden="true">2</div>
+        <div class="step-body">
+          <h3 data-i18n="step2_title">Your Personalised Plan</h3>
+          <p data-i18n="step2_desc">Based on your level, exam board, and learning style, Véronique crafts a bespoke study plan with clear milestones — so you always know exactly where you are headed.</p>
+        </div>
+      </div>
+      <div class="step reveal reveal-delay-3">
+        <div class="step-num" aria-hidden="true">3</div>
+        <div class="step-body">
+          <h3 data-i18n="step3_title">Weekly Progress Sessions</h3>
+          <p data-i18n="step3_desc">Regular one-to-one online lessons, detailed feedback, curated resources, and constant progress monitoring — with parents kept informed every step of the way.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: Testimonials -->
+<section id="testimonials" aria-label="Student testimonials">
+  <div class="container">
+    <div class="text-center reveal">
+      <span class="section-label" data-i18n="testi_label">Student Reviews</span>
+      <h2 data-i18n="testi_heading">What Families Say</h2>
+    </div>
+    <div class="testi-grid">
+      <article class="testi-card reveal reveal-delay-1" aria-label="Review from Kristina">
+        <div class="stars" aria-label="5 stars">★★★★★</div>
+        <p class="testi-text">"Véronique is a fantastic tutor. My son has really enjoyed working with her on his French and Spanish. He said he feels much more confident and is clearly making great progress."</p>
+        <div class="testi-meta">
+          <div class="testi-avatar" aria-hidden="true">K</div>
+          <div>
+            <div class="testi-name">Kristina</div>
+            <div class="testi-detail" data-i18n="testi_detail_gcse">Parent · GCSE French &amp; Spanish</div>
+          </div>
+        </div>
+      </article>
+      <article class="testi-card reveal reveal-delay-2" aria-label="Review from Ernesto">
+        <div class="stars" aria-label="5 stars">★★★★★</div>
+        <p class="testi-text">"Véronique is a wonderful tutor. She helped my son with his French A-Level exam and he achieved marvellous results. Her dedication to her students is truly exceptional."</p>
+        <div class="testi-meta">
+          <div class="testi-avatar" aria-hidden="true">E</div>
+          <div>
+            <div class="testi-name">Ernesto Amador</div>
+            <div class="testi-detail" data-i18n="testi_detail_alevel">Parent · A-Level French</div>
+          </div>
+        </div>
+      </article>
+      <article class="testi-card reveal reveal-delay-3" aria-label="Review from Demi">
+        <div class="stars" aria-label="5 stars">★★★★★</div>
+        <p class="testi-text">"Véronique is a great tutor — patient, friendly, and incredibly effective. My children have developed their French enormously and gained real confidence in speaking the language."</p>
+        <div class="testi-meta">
+          <div class="testi-avatar" aria-hidden="true">D</div>
+          <div>
+            <div class="testi-name">Demi</div>
+            <div class="testi-detail" data-i18n="testi_detail_primary">Parent · Primary &amp; GCSE French</div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: Pricing -->
+<section id="pricing" aria-label="Lesson pricing">
+  <div class="container">
+    <div class="text-center reveal">
+      <span class="section-label" data-i18n="price_label">Investment</span>
+      <h2 data-i18n="price_heading">Transparent Pricing</h2>
+      <p style="color:#666;margin-top:0.8rem;font-size:1rem;" data-i18n="price_sub">All lessons are 60 minutes. First trial lesson is free.</p>
+    </div>
+    <div class="pricing-grid" style="margin-top:3rem;">
+      <div class="price-card reveal reveal-delay-1">
+        <div class="price-tier" data-i18n="tier1_name">Primary &amp; Secondary</div>
+        <div class="price-amount">£80</div>
+        <div class="price-per" data-i18n="per_lesson">per lesson</div>
+        <ul class="price-features">
+          <li data-i18n="pf_online">Online via Zoom or Teams</li>
+          <li data-i18n="pf_resources">Curated learning materials</li>
+          <li data-i18n="pf_progress">Progress reports</li>
+          <li data-i18n="pf_flexible">Flexible scheduling</li>
+        </ul>
+        <a href="#contact" class="btn-primary" style="display:block;text-align:center;" data-i18n="book_btn">Book Now</a>
+      </div>
+      <div class="price-card featured reveal reveal-delay-2">
+        <div class="price-badge" data-i18n="most_popular">Most Popular</div>
+        <div class="price-tier" data-i18n="tier2_name">GCSE &amp; IGCSE</div>
+        <div class="price-amount">£80</div>
+        <div class="price-per" data-i18n="per_lesson">per lesson</div>
+        <ul class="price-features">
+          <li data-i18n="pf_exam">Exam board expertise (AQA, Edexcel)</li>
+          <li data-i18n="pf_grade9">Grade 9 targeted programme</li>
+          <li data-i18n="pf_mock">Mock exam practice</li>
+          <li data-i18n="pf_speaking">Speaking exam coaching</li>
+        </ul>
+        <a href="#contact" class="btn-primary" style="display:block;text-align:center;" data-i18n="book_btn">Book Now</a>
+      </div>
+      <div class="price-card reveal reveal-delay-3">
+        <div class="price-tier" data-i18n="tier3_name">IB &amp; A-Level</div>
+        <div class="price-amount">£90</div>
+        <div class="price-per" data-i18n="per_lesson">per lesson</div>
+        <ul class="price-features">
+          <li data-i18n="pf_ib">IB and A-Level specialist</li>
+          <li data-i18n="pf_lit">Literature &amp; essay coaching</li>
+          <li data-i18n="pf_oral">Oral exam preparation</li>
+          <li data-i18n="pf_oxbridge">MLAT / Oxbridge prep available</li>
+        </ul>
+        <a href="#contact" class="btn-primary" style="display:block;text-align:center;" data-i18n="book_btn">Book Now</a>
+      </div>
+      <div class="price-card reveal reveal-delay-4">
+        <div class="price-tier" data-i18n="tier4_name">University &amp; Adults</div>
+        <div class="price-amount">£100</div>
+        <div class="price-per" data-i18n="per_lesson">per lesson</div>
+        <ul class="price-features">
+          <li data-i18n="pf_uni">University level &amp; degree support</li>
+          <li data-i18n="pf_business">Business language coaching</li>
+          <li data-i18n="pf_conv">Conversational fluency</li>
+          <li data-i18n="pf_travel">Travel &amp; relocation French/PT</li>
+        </ul>
+        <a href="#contact" class="btn-primary" style="display:block;text-align:center;" data-i18n="book_btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: FAQ -->
+<section id="faq" aria-label="Frequently asked questions">
+  <div class="container">
+    <div class="text-center reveal">
+      <span class="section-label" data-i18n="faq_label">Have Questions?</span>
+      <h2 data-i18n="faq_heading">Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-list" role="list">
+      <div class="faq-item" role="listitem">
+        <button class="faq-q" aria-expanded="false" aria-controls="faq1-answer" id="faq1-btn">
+          <span data-i18n="faq1_q">How do online lessons work technically?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a" id="faq1-answer" role="region" aria-labelledby="faq1-btn">
+          <p data-i18n="faq1_a">Lessons are delivered via Zoom or Microsoft Teams — both free to use. Véronique shares her screen to present materials, and you can use the video and audio to practise speaking. A stable internet connection and a quiet space are all you need.</p>
+        </div>
+      </div>
+      <div class="faq-item" role="listitem">
+        <button class="faq-q" aria-expanded="false" aria-controls="faq2-answer" id="faq2-btn">
+          <span data-i18n="faq2_q">What exam boards do you cover?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a" id="faq2-answer" role="region" aria-labelledby="faq2-btn">
+          <p data-i18n="faq2_a">As a former examiner, Véronique has deep knowledge of AQA, Edexcel, OCR, and WJEC specifications for GCSE and A-Level. She also covers IGCSE (Cambridge) and International Baccalaureate (IB) syllabi across all four languages.</p>
+        </div>
+      </div>
+      <div class="faq-item" role="listitem">
+        <button class="faq-q" aria-expanded="false" aria-controls="faq3-answer" id="faq3-btn">
+          <span data-i18n="faq3_q">How quickly will my child see progress?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a" id="faq3-answer" role="region" aria-labelledby="faq3-btn">
+          <p data-i18n="faq3_a">Most students notice a meaningful improvement from the very first lesson. Véronique's method demystifies the language so progress is rapid and visible. If you are not satisfied after the first lesson, she will refund the lesson cost in full — no questions asked.</p>
+        </div>
+      </div>
+      <div class="faq-item" role="listitem">
+        <button class="faq-q" aria-expanded="false" aria-controls="faq4-answer" id="faq4-btn">
+          <span data-i18n="faq4_q">What ages and levels do you teach?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a" id="faq4-answer" role="region" aria-labelledby="faq4-btn">
+          <p data-i18n="faq4_a">Véronique teaches learners of all ages — from primary school children (Year 3 upwards) through to university students and adult learners. For younger children she uses the same natural immersion approach a toddler uses to learn their mother tongue, often reaching GCSE level by Year 8 or 9.</p>
+        </div>
+      </div>
+      <div class="faq-item" role="listitem">
+        <button class="faq-q" aria-expanded="false" aria-controls="faq5-answer" id="faq5-btn">
+          <span data-i18n="faq5_q">When are lessons available?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a" id="faq5-answer" role="region" aria-labelledby="faq5-btn">
+          <p data-i18n="faq5_a">Lessons are available on weekdays and weekends at all times — morning, afternoon, and evening. This flexibility makes it easy to fit tutoring around school schedules, work commitments, or time zone differences for international students.</p>
+        </div>
+      </div>
+      <div class="faq-item" role="listitem">
+        <button class="faq-q" aria-expanded="false" aria-controls="faq6-answer" id="faq6-btn">
+          <span data-i18n="faq6_q">Can I learn Portuguese if I already speak Spanish?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a" id="faq6-answer" role="region" aria-labelledby="faq6-btn">
+          <p data-i18n="faq6_a">Absolutely — and you will progress even faster! Spanish and Portuguese share around 89% lexical similarity. Véronique uses your existing Spanish knowledge as a springboard, helping you reach conversational Portuguese in a remarkably short time while navigating the key differences with precision.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: Contact -->
+<section id="contact" aria-label="Contact and booking">
+  <div class="container">
+    <div class="text-center reveal">
+      <span class="section-label" data-i18n="contact_label">Get in Touch</span>
+      <h2 data-i18n="contact_heading">Begin Your Language Journey</h2>
+      <p class="contact-sub" data-i18n="contact_sub">Book your free trial lesson today. No commitment. No risk. Just progress.</p>
+    </div>
+    <div class="contact-grid">
+      <form class="contact-form reveal" action="mailto:verone@languageswithverone.com" method="GET" enctype="text/plain" aria-label="Contact form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name" data-i18n="form_name">Your Name</label>
+            <input type="text" id="name" name="name" required placeholder="Jane Smith" aria-required="true">
+          </div>
+          <div class="form-group">
+            <label for="email" data-i18n="form_email">Email Address</label>
+            <input type="email" id="email" name="email" required placeholder="jane@example.com" aria-required="true">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="language" data-i18n="form_language">Language of Interest</label>
+            <select id="language" name="language" aria-required="true">
+              <option value="" data-i18n="form_select">Select a language…</option>
+              <option>French · Français</option>
+              <option>German · Deutsch</option>
+              <option>Spanish · Español</option>
+              <option>Portuguese · Português</option>
+              <option data-i18n="form_multi">Multiple languages</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="level" data-i18n="form_level">Current Level / Exam</label>
+            <select id="level" name="level">
+              <option value="" data-i18n="form_select_level">Select level…</option>
+              <option>Primary / KS3</option>
+              <option>GCSE</option>
+              <option>IGCSE</option>
+              <option>IB</option>
+              <option>A-Level</option>
+              <option>University</option>
+              <option data-i18n="form_adult">Adult / Casual Learner</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="message" data-i18n="form_message">Message (optional)</label>
+          <textarea id="message" name="body" placeholder="Tell me a little about your goals or current challenges…"></textarea>
+        </div>
+        <button type="submit" class="btn-primary" style="width:100%;margin-top:0.5rem;" data-i18n="form_submit">Send Message &amp; Book Free Trial</button>
+      </form>
+      <div class="contact-info reveal reveal-delay-2">
+        <h3 data-i18n="contact_details">Contact Details</h3>
+        <div class="contact-item">
+          <div class="contact-icon" aria-hidden="true">✉</div>
+          <div>
+            <p style="color:rgba(255,255,255,0.5);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.2rem;" data-i18n="email_label">Email</p>
+            <p><a href="mailto:verone@languageswithverone.com">verone@languageswithverone.com</a></p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon" aria-hidden="true">🌐</div>
+          <div>
+            <p style="color:rgba(255,255,255,0.5);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.2rem;" data-i18n="location_label">Location</p>
+            <p data-i18n="location_val">London, UK · Online Worldwide</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon" aria-hidden="true">⏰</div>
+          <div>
+            <p style="color:rgba(255,255,255,0.5);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.2rem;" data-i18n="avail_label">Availability</p>
+            <p data-i18n="avail_val">Weekdays &amp; Weekends · All Hours</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon" aria-hidden="true">★</div>
+          <div>
+            <p style="color:rgba(255,255,255,0.5);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.2rem;" data-i18n="rating_label">FirstTutors Rating</p>
+            <p>★★★★★ 5.0 &nbsp;·&nbsp; <span style="color:var(--secondary);">41 Reviews</span></p>
+          </div>
+        </div>
+        <div style="margin-top:2rem;padding:1.5rem;background:rgba(201,169,110,0.1);border-radius:8px;border:1px solid rgba(201,169,110,0.2);">
+          <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:rgba(255,255,255,0.85);line-height:1.6;" data-i18n="guarantee">"If you are not satisfied with the progress made in your very first lesson, I will refund the cost in full."</p>
+          <p style="font-size:0.78rem;color:var(--secondary);margin-top:0.5rem;font-weight:700;letter-spacing:0.06em;">— VÉRONIQUE PIMENTEL</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: Footer -->
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#hero" class="nav-logo">Véronique <span>Pimentel</span></a>
+        <p data-i18n="footer_bio">Professional online language tutor based in London. Native French speaker. PGCE qualified. Former examiner. Teaching French, German, Spanish &amp; Portuguese since 2010.</p>
+      </div>
+      <div class="footer-langs">
+        <h4 data-i18n="footer_langs_title">Languages</h4>
+        <ul>
+          <li>🇫🇷 Français · French</li>
+          <li>🇩🇪 Deutsch · German</li>
+          <li>🇪🇸 Español · Spanish</li>
+          <li>🇵🇹 Português · Portuguese</li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-quote-block">
+          <p>"Le voyage de mille lieues commence par un seul pas."</p>
+          <span>FR — A journey of a thousand miles begins with a single step.</span>
+        </div>
+        <div class="footer-quote-block" style="margin-top:1.2rem;">
+          <p>"Eine Sprache öffnet eine Tür zur Welt."</p>
+          <span>DE — One language opens a door to the world.</span>
+        </div>
+        <div class="footer-quote-block" style="margin-top:1.2rem;">
+          <p>"El límite de tu idioma es el límite de tu mundo."</p>
+          <span>ES — The limits of your language are the limits of your world.</span>
+        </div>
+        <div class="footer-quote-block" style="margin-top:1.2rem;">
+          <p>"Uma língua diferente é uma visão diferente da vida."</p>
+          <span>PT — A different language is a different vision of life.</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p data-i18n="footer_copy">© 2026 Véronique Pimentel. All rights reserved.</p>
+      <p>French · German · Spanish · Portuguese</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── LANGUAGE SWITCHER DATA ──────────────────────────────────────────────
+const i18n = {
+  en: {
+    nav_about: "About", nav_languages: "Languages", nav_how: "How It Works",
+    nav_pricing: "Pricing", nav_faq: "FAQ", nav_contact: "Contact", nav_book: "Book Trial",
+    hero_pretitle: "Online Language Tutor · London",
+    hero_name: "Véronique", hero_tagline: "Unlock 4 Languages. One Expert Tutor. Your Pace.",
+    hero_cta1: "Book a Free Trial", hero_cta2: "Discover My Method",
+    stat_years: "Years Experience", stat_langs: "Languages Taught",
+    stat_reviews: "5-Star Reviews", stat_rating: "First Tutors Rating",
+    about_label: "About Me", about_heading: "A Passion for Languages. A Gift for Teaching.",
+    about_p1: "I am a native French speaker and qualified Advanced Skills Teacher with over 15 years' experience teaching in London secondary schools. I have also trained fellow teachers to teach French, Spanish and German at all levels — and I speak 5 languages fluently.",
+    about_p2: "As a former examiner for one of England's main Exam Boards, I bring unique insight into exactly what assessors look for. My students consistently make rapid, measurable progress — often within the very first lesson.",
+    about_p3: "I follow a revolutionary teaching method that demystifies languages and makes them genuinely accessible. GCSE students regularly achieve Grade 9 writing after just one year. If you are not satisfied with your progress in the first lesson, I will refund the cost in full.",
+    about_p4: "Each learner is different, and I adapt every session to the individual — something a classroom simply cannot offer. Seeing my students gain confidence is the greatest reward.",
+    lang_label: "What I Teach", lang_heading: "Four Languages, One Exceptional Tutor",
+    levels_all: "KS3 · KS4 · KS5 · GCSE · IGCSE · IB · A-Level · University",
+    levels_gcse: "KS3 · KS4 · GCSE · A-Level",
+    levels_conversational: "All Levels · Conversational · Business",
+    fr_desc: "As a native French speaker with examiner experience, Véronique gives students a decisive advantage — her pupils regularly achieve Grade 9 at GCSE and top marks at A-Level.",
+    de_desc: "German grammar is demystified through a structured, logical approach that builds confidence quickly — students report feeling far more capable after just a few sessions.",
+    es_desc: "Spanish comes alive through rich cultural immersion and exam-focused techniques — the ideal combination for students aiming at top GCSE and IB grades.",
+    pt_desc: "From European Portuguese to Brazilian nuances, Véronique tailors lessons to your specific goals — whether travel, business, or achieving fluency for personal enrichment.",
+    how_label: "The Journey", how_heading: "Three Steps to Fluency",
+    step1_title: "Free Trial Lesson", step1_desc: "We begin with a complimentary 60-minute session to assess your current level, identify goals, and let you experience Véronique's unique teaching method — completely risk-free.",
+    step2_title: "Your Personalised Plan", step2_desc: "Based on your level, exam board, and learning style, Véronique crafts a bespoke study plan with clear milestones — so you always know exactly where you are headed.",
+    step3_title: "Weekly Progress Sessions", step3_desc: "Regular one-to-one online lessons, detailed feedback, curated resources, and constant progress monitoring — with parents kept informed every step of the way.",
+    testi_label: "Student Reviews", testi_heading: "What Families Say",
+    testi_detail_gcse: "Parent · GCSE French & Spanish",
+    testi_detail_alevel: "Parent · A-Level French",
+    testi_detail_primary: "Parent · Primary & GCSE French",
+    price_label: "Investment", price_heading: "Transparent Pricing",
+    price_sub: "All lessons are 60 minutes. First trial lesson is free.",
+    tier1_name: "Primary & Secondary", tier2_name: "GCSE & IGCSE",
+    tier3_name: "IB & A-Level", tier4_name: "University & Adults",
+    per_lesson: "per lesson", most_popular: "Most Popular",
+    pf_online: "Online via Zoom or Teams", pf_resources: "Curated learning materials",
+    pf_progress: "Progress reports", pf_flexible: "Flexible scheduling",
+    pf_exam: "Exam board expertise (AQA, Edexcel)", pf_grade9: "Grade 9 targeted programme",
+    pf_mock: "Mock exam practice", pf_speaking: "Speaking exam coaching",
+    pf_ib: "IB and A-Level specialist", pf_lit: "Literature & essay coaching",
+    pf_oral: "Oral exam preparation", pf_oxbridge: "MLAT / Oxbridge prep available",
+    pf_uni: "University level & degree support", pf_business: "Business language coaching",
+    pf_conv: "Conversational fluency", pf_travel: "Travel & relocation French/PT",
+    book_btn: "Book Now",
+    faq_label: "Have Questions?", faq_heading: "Frequently Asked Questions",
+    faq1_q: "How do online lessons work technically?",
+    faq1_a: "Lessons are delivered via Zoom or Microsoft Teams — both free to use. Véronique shares her screen to present materials, and you can use the video and audio to practise speaking. A stable internet connection and a quiet space are all you need.",
+    faq2_q: "What exam boards do you cover?",
+    faq2_a: "As a former examiner, Véronique has deep knowledge of AQA, Edexcel, OCR, and WJEC specifications for GCSE and A-Level. She also covers IGCSE (Cambridge) and International Baccalaureate (IB) syllabi across all four languages.",
+    faq3_q: "How quickly will my child see progress?",
+    faq3_a: "Most students notice a meaningful improvement from the very first lesson. Véronique's method demystifies the language so progress is rapid and visible. If you are not satisfied after the first lesson, she will refund the lesson cost in full — no questions asked.",
+    faq4_q: "What ages and levels do you teach?",
+    faq4_a: "Véronique teaches learners of all ages — from primary school children (Year 3 upwards) through to university students and adult learners. For younger children she uses the same natural immersion approach a toddler uses to learn their mother tongue, often reaching GCSE level by Year 8 or 9.",
+    faq5_q: "When are lessons available?",
+    faq5_a: "Lessons are available on weekdays and weekends at all times — morning, afternoon, and evening. This flexibility makes it easy to fit tutoring around school schedules, work commitments, or time zone differences for international students.",
+    faq6_q: "Can I learn Portuguese if I already speak Spanish?",
+    faq6_a: "Absolutely — and you will progress even faster! Spanish and Portuguese share around 89% lexical similarity. Véronique uses your existing Spanish knowledge as a springboard, helping you reach conversational Portuguese in a remarkably short time.",
+    contact_label: "Get in Touch", contact_heading: "Begin Your Language Journey",
+    contact_sub: "Book your free trial lesson today. No commitment. No risk. Just progress.",
+    contact_details: "Contact Details",
+    form_name: "Your Name", form_email: "Email Address", form_language: "Language of Interest",
+    form_level: "Current Level / Exam", form_message: "Message (optional)",
+    form_select: "Select a language…", form_select_level: "Select level…",
+    form_multi: "Multiple languages", form_adult: "Adult / Casual Learner",
+    form_submit: "Send Message & Book Free Trial",
+    email_label: "Email", location_label: "Location", location_val: "London, UK · Online Worldwide",
+    avail_label: "Availability", avail_val: "Weekdays & Weekends · All Hours",
+    rating_label: "FirstTutors Rating",
+    guarantee: '"If you are not satisfied with the progress made in your very first lesson, I will refund the cost in full."',
+    footer_bio: "Professional online language tutor based in London. Native French speaker. PGCE qualified. Former examiner. Teaching French, German, Spanish & Portuguese since 2010.",
+    footer_langs_title: "Languages",
+    footer_copy: "© 2026 Véronique Pimentel. All rights reserved."
+  },
+  fr: {
+    nav_about: "À propos", nav_languages: "Langues", nav_how: "Comment ça marche",
+    nav_pricing: "Tarifs", nav_faq: "FAQ", nav_contact: "Contact", nav_book: "Essai gratuit",
+    hero_pretitle: "Professeur de langues en ligne · Londres",
+    hero_name: "Véronique", hero_tagline: "Maîtrisez 4 langues. Un seul professeur. À votre rythme.",
+    hero_cta1: "Réserver un cours d'essai", hero_cta2: "Découvrir ma méthode",
+    stat_years: "Ans d'expérience", stat_langs: "Langues enseignées",
+    stat_reviews: "Avis 5 étoiles", stat_rating: "Note First Tutors",
+    about_label: "À propos de moi", about_heading: "Une passion pour les langues. Un don pour l'enseignement.",
+    about_p1: "Je suis professeure de français langue maternelle et enseignante qualifiée Advanced Skills Teacher avec plus de 15 ans d'expérience dans les lycées londoniens. J'ai également formé des enseignants en français, espagnol et allemand à tous les niveaux — et je parle couramment 5 langues.",
+    about_p2: "En tant qu'ancienne examinatrice pour l'un des principaux organismes d'examens d'Angleterre, j'apporte un regard unique sur ce que les correcteurs recherchent. Mes élèves progressent rapidement et de façon mesurable — souvent dès le premier cours.",
+    about_p3: "Je suis une méthode d'enseignement révolutionnaire qui démystifie les langues et les rend véritablement accessibles. Si vous n'êtes pas satisfait(e) de vos progrès lors du premier cours, je vous rembourse intégralement.",
+    about_p4: "Chaque apprenant est différent, et j'adapte chaque séance à l'individu — quelque chose qu'une salle de classe ne peut tout simplement pas offrir.",
+    lang_label: "Ce que j'enseigne", lang_heading: "Quatre langues, une professeure exceptionnelle",
+    levels_all: "3ème–Terminale · GCSE · IGCSE · IB · A-Level · Université",
+    levels_gcse: "Collège · Lycée · GCSE · A-Level",
+    levels_conversational: "Tous niveaux · Conversation · Affaires",
+    fr_desc: "En tant que locutrice native avec une expérience d'examinatrice, Véronique donne aux élèves un avantage décisif — ses élèves obtiennent régulièrement les meilleures notes.",
+    de_desc: "La grammaire allemande est démystifiée grâce à une approche structurée et logique qui renforce rapidement la confiance.",
+    es_desc: "L'espagnol prend vie grâce à une immersion culturelle riche et des techniques axées sur les examens.",
+    pt_desc: "Du portugais européen aux nuances brésiliennes, Véronique adapte chaque cours à vos objectifs spécifiques.",
+    how_label: "Le parcours", how_heading: "Trois étapes vers la fluidité",
+    step1_title: "Cours d'essai gratuit", step1_desc: "Nous commençons par une séance de 60 minutes pour évaluer votre niveau et vous faire découvrir la méthode unique de Véronique — sans aucun risque.",
+    step2_title: "Votre plan personnalisé", step2_desc: "Basé sur votre niveau et vos objectifs, Véronique élabore un plan d'étude sur mesure avec des étapes claires.",
+    step3_title: "Séances hebdomadaires", step3_desc: "Des cours individuels réguliers, des retours détaillés, des ressources sélectionnées et un suivi constant des progrès.",
+    testi_label: "Avis des élèves", testi_heading: "Ce que disent les familles",
+    testi_detail_gcse: "Parent · GCSE Français & Espagnol",
+    testi_detail_alevel: "Parent · A-Level Français",
+    testi_detail_primary: "Parent · Primaire & GCSE Français",
+    price_label: "Investissement", price_heading: "Tarifs transparents",
+    price_sub: "Tous les cours durent 60 minutes. Le premier cours d'essai est gratuit.",
+    tier1_name: "Primaire & Secondaire", tier2_name: "GCSE & IGCSE",
+    tier3_name: "IB & A-Level", tier4_name: "Université & Adultes",
+    per_lesson: "par cours", most_popular: "Le plus populaire",
+    pf_online: "En ligne via Zoom ou Teams", pf_resources: "Matériaux pédagogiques sélectionnés",
+    pf_progress: "Rapports de progression", pf_flexible: "Horaires flexibles",
+    pf_exam: "Expertise examens (AQA, Edexcel)", pf_grade9: "Programme ciblé Note 9",
+    pf_mock: "Examens blancs", pf_speaking: "Coaching expression orale",
+    pf_ib: "Spécialiste IB et A-Level", pf_lit: "Littérature & rédaction",
+    pf_oral: "Préparation à l'oral", pf_oxbridge: "Prépa MLAT / Oxbridge disponible",
+    pf_uni: "Soutien universitaire", pf_business: "Langue des affaires",
+    pf_conv: "Fluidité conversationnelle", pf_travel: "Voyage & installation en France/Portugal",
+    book_btn: "Réserver",
+    faq_label: "Des questions ?", faq_heading: "Questions fréquentes",
+    faq1_q: "Comment fonctionnent les cours en ligne ?",
+    faq1_a: "Les cours sont dispensés via Zoom ou Microsoft Teams — tous deux gratuits. Véronique partage son écran pour présenter les supports et vous utilisez la vidéo et l'audio pour pratiquer.",
+    faq2_q: "Quels programmes d'examens couvrez-vous ?",
+    faq2_a: "Ancienne examinatrice, Véronique maîtrise parfaitement AQA, Edexcel, OCR et WJEC pour le GCSE et l'A-Level, ainsi que l'IGCSE (Cambridge) et le Baccalauréat International (IB).",
+    faq3_q: "À quelle vitesse mon enfant progressera-t-il ?",
+    faq3_a: "La plupart des élèves constatent une amélioration significative dès le premier cours. Si vous n'êtes pas satisfait, le cours est remboursé intégralement.",
+    faq4_q: "Quels âges et niveaux enseignez-vous ?",
+    faq4_a: "De l'école primaire (à partir du CE2) jusqu'aux étudiants universitaires et adultes. Les jeunes enfants progressent souvent jusqu'au niveau GCSE dès la 4ème.",
+    faq5_q: "Quand les cours sont-ils disponibles ?",
+    faq5_a: "Les cours sont disponibles en semaine et le week-end, à toute heure — matin, après-midi et soir.",
+    faq6_q: "Puis-je apprendre le portugais si je parle déjà espagnol ?",
+    faq6_a: "Absolument — et vous progresserez encore plus vite ! L'espagnol et le portugais partagent environ 89 % de similarité lexicale.",
+    contact_label: "Prendre contact", contact_heading: "Commencez votre voyage linguistique",
+    contact_sub: "Réservez votre cours d'essai gratuit aujourd'hui. Sans engagement. Sans risque.",
+    contact_details: "Coordonnées",
+    form_name: "Votre prénom", form_email: "Adresse e-mail", form_language: "Langue souhaitée",
+    form_level: "Niveau actuel / Examen", form_message: "Message (facultatif)",
+    form_select: "Choisir une langue…", form_select_level: "Choisir un niveau…",
+    form_multi: "Plusieurs langues", form_adult: "Adulte / Loisir",
+    form_submit: "Envoyer & Réserver un cours d'essai",
+    email_label: "E-mail", location_label: "Lieu", location_val: "Londres, RU · En ligne dans le monde entier",
+    avail_label: "Disponibilité", avail_val: "Semaine & Week-end · Toute heure",
+    rating_label: "Note First Tutors",
+    guarantee: '"Si vous n'êtes pas satisfait(e) des progrès réalisés lors de votre tout premier cours, je vous rembourse intégralement."',
+    footer_bio: "Professeure de langues en ligne basée à Londres. Locutrice native française. Qualifiée PGCE. Ancienne examinatrice. Enseigne le français, l'allemand, l'espagnol et le portugais depuis 2010.",
+    footer_langs_title: "Langues",
+    footer_copy: "© 2026 Véronique Pimentel. Tous droits réservés."
+  },
+  de: {
+    nav_about: "Über mich", nav_languages: "Sprachen", nav_how: "Wie es funktioniert",
+    nav_pricing: "Preise", nav_faq: "FAQ", nav_contact: "Kontakt", nav_book: "Probe buchen",
+    hero_pretitle: "Online-Sprachlehrerin · London",
+    hero_name: "Véronique", hero_tagline: "4 Sprachen meistern. Eine Lehrerin. Ihr Tempo.",
+    hero_cta1: "Probestunde buchen", hero_cta2: "Methode entdecken",
+    stat_years: "Jahre Erfahrung", stat_langs: "Gelehrte Sprachen",
+    stat_reviews: "5-Sterne-Bewertungen", stat_rating: "First Tutors Bewertung",
+    about_label: "Über mich", about_heading: "Leidenschaft für Sprachen. Talent fürs Lehren.",
+    about_p1: "Ich bin Muttersprachlerin Französisch und qualifizierte Advanced Skills Teacher mit über 15 Jahren Unterrichtserfahrung an Londoner Sekundarschulen. Ich spreche 5 Sprachen fließend.",
+    about_p2: "Als ehemalige Prüferin für eine der wichtigsten Prüfungskommissionen Englands weiß ich genau, worauf die Prüfer achten. Meine Schüler machen schnelle, messbare Fortschritte — oft schon in der ersten Stunde.",
+    about_p3: "Ich verwende eine revolutionäre Lehrmethode, die Sprachen entmystifiziert. Falls Sie mit Ihren Fortschritten in der ersten Stunde nicht zufrieden sind, erstatten Sie die Kosten vollständig zurück.",
+    about_p4: "Jeder Lernende ist anders, und ich passe jede Sitzung individuell an — etwas, das ein Klassenraum einfach nicht bieten kann.",
+    lang_label: "Was ich unterrichte", lang_heading: "Vier Sprachen, eine außergewöhnliche Lehrerin",
+    levels_all: "Alle Stufen · GCSE · IGCSE · IB · A-Level · Universität",
+    levels_gcse: "Sekundar · GCSE · A-Level",
+    levels_conversational: "Alle Niveaus · Konversation · Geschäftlich",
+    fr_desc: "Als Muttersprachlerin mit Prüfererfahrung verschafft Véronique Schülern einen entscheidenden Vorteil — sie erreichen regelmäßig Top-Noten.",
+    de_desc: "Deutsche Grammatik wird durch einen strukturierten, logischen Ansatz entmystifiziert, der schnell Selbstvertrauen aufbaut.",
+    es_desc: "Spanisch erwacht durch reiche kulturelle Immersion und prüfungsorientierte Techniken.",
+    pt_desc: "Vom europäischen Portugiesisch bis zu brasilianischen Nuancen — maßgeschneidert für Ihre Ziele.",
+    how_label: "Der Weg", how_heading: "Drei Schritte zur Sprachbeherrschung",
+    step1_title: "Kostenlose Probestunde", step1_desc: "Wir beginnen mit einer kostenlosen 60-Minuten-Sitzung, um Ihr Niveau einzuschätzen und Véroniques einzigartige Methode zu erleben — völlig risikofrei.",
+    step2_title: "Ihr persönlicher Plan", step2_desc: "Basierend auf Ihrem Niveau und Lernstil erstellt Véronique einen maßgeschneiderten Lernplan mit klaren Meilensteinen.",
+    step3_title: "Wöchentliche Sitzungen", step3_desc: "Regelmäßige Einzelstunden, detailliertes Feedback, kuratierte Materialien und ständige Fortschrittskontrolle.",
+    testi_label: "Schülerbewertungen", testi_heading: "Was Familien sagen",
+    testi_detail_gcse: "Elternteil · GCSE Französisch & Spanisch",
+    testi_detail_alevel: "Elternteil · A-Level Französisch",
+    testi_detail_primary: "Elternteil · Grundschule & GCSE Französisch",
+    price_label: "Investition", price_heading: "Transparente Preise",
+    price_sub: "Alle Stunden dauern 60 Minuten. Die erste Probestunde ist kostenlos.",
+    tier1_name: "Grundschule & Sekundar", tier2_name: "GCSE & IGCSE",
+    tier3_name: "IB & A-Level", tier4_name: "Universität & Erwachsene",
+    per_lesson: "pro Stunde", most_popular: "Am beliebtesten",
+    pf_online: "Online via Zoom oder Teams", pf_resources: "Kuratierte Lernmaterialien",
+    pf_progress: "Fortschrittsberichte", pf_flexible: "Flexible Terminplanung",
+    pf_exam: "Prüfungsexpertise (AQA, Edexcel)", pf_grade9: "Note-9-Programm",
+    pf_mock: "Probeprüfungen", pf_speaking: "Mündliche Prüfungsvorbereitung",
+    pf_ib: "IB- und A-Level-Spezialistin", pf_lit: "Literatur & Aufsatzcoaching",
+    pf_oral: "Mündliche Prüfungsvorbereitung", pf_oxbridge: "MLAT / Oxbridge-Vorbereitung",
+    pf_uni: "Universitätsniveau & Studienunterstützung", pf_business: "Geschäftssprachcoaching",
+    pf_conv: "Konversationsfähigkeit", pf_travel: "Reise & Umzug",
+    book_btn: "Jetzt buchen",
+    faq_label: "Fragen?", faq_heading: "Häufig gestellte Fragen",
+    faq1_q: "Wie funktionieren Online-Unterrichtsstunden technisch?",
+    faq1_a: "Stunden werden über Zoom oder Microsoft Teams abgehalten — beide kostenlos. Véronique teilt ihren Bildschirm, und Sie üben Sprechen per Video und Audio.",
+    faq2_q: "Welche Prüfungskommissionen decken Sie ab?",
+    faq2_a: "Als ehemalige Prüferin kennt Véronique AQA, Edexcel, OCR und WJEC für GCSE und A-Level sowie IGCSE (Cambridge) und IB.",
+    faq3_q: "Wie schnell wird mein Kind Fortschritte machen?",
+    faq3_a: "Die meisten Schüler bemerken eine deutliche Verbesserung ab der ersten Stunde. Bei Unzufriedenheit nach der ersten Stunde wird die Stunde vollständig erstattet.",
+    faq4_q: "Welche Altersgruppen und Niveaus unterrichten Sie?",
+    faq4_a: "Von Grundschülern (ab Klasse 3) bis zu Universitätsstudenten und Erwachsenen.",
+    faq5_q: "Wann sind Stunden verfügbar?",
+    faq5_a: "Stunden sind an Wochentagen und Wochenenden zu allen Zeiten verfügbar — morgens, nachmittags und abends.",
+    faq6_q: "Kann ich Portugiesisch lernen, wenn ich schon Spanisch spreche?",
+    faq6_a: "Auf jeden Fall — und Sie werden noch schneller vorankommen! Spanisch und Portugiesisch teilen sich etwa 89 % des Wortschatzes.",
+    contact_label: "Kontakt aufnehmen", contact_heading: "Beginnen Sie Ihre Sprachreise",
+    contact_sub: "Buchen Sie heute Ihre kostenlose Probestunde. Keine Verpflichtung. Kein Risiko.",
+    contact_details: "Kontaktdaten",
+    form_name: "Ihr Name", form_email: "E-Mail-Adresse", form_language: "Gewünschte Sprache",
+    form_level: "Aktuelles Niveau / Prüfung", form_message: "Nachricht (optional)",
+    form_select: "Sprache auswählen…", form_select_level: "Niveau auswählen…",
+    form_multi: "Mehrere Sprachen", form_adult: "Erwachsener / Freizeitlerner",
+    form_submit: "Nachricht senden & Probestunde buchen",
+    email_label: "E-Mail", location_label: "Standort", location_val: "London, UK · Online weltweit",
+    avail_label: "Verfügbarkeit", avail_val: "Wochentage & Wochenende · Alle Zeiten",
+    rating_label: "First Tutors Bewertung",
+    guarantee: '"Wenn Sie nach Ihrer ersten Stunde nicht zufrieden sind, erstatten wir die Kosten vollständig."',
+    footer_bio: "Professionelle Online-Sprachlehrerin in London. Französisch Muttersprachlerin. PGCE-qualifiziert. Ehemalige Prüferin. Unterrichtet Französisch, Deutsch, Spanisch & Portugiesisch seit 2010.",
+    footer_langs_title: "Sprachen",
+    footer_copy: "© 2026 Véronique Pimentel. Alle Rechte vorbehalten."
+  },
+  es: {
+    nav_about: "Sobre mí", nav_languages: "Idiomas", nav_how: "Cómo funciona",
+    nav_pricing: "Precios", nav_faq: "FAQ", nav_contact: "Contacto", nav_book: "Clase de prueba",
+    hero_pretitle: "Profesora de idiomas en línea · Londres",
+    hero_name: "Véronique", hero_tagline: "Domina 4 idiomas. Una sola profesora. Tu ritmo.",
+    hero_cta1: "Reservar clase de prueba gratuita", hero_cta2: "Descubrir mi método",
+    stat_years: "Años de experiencia", stat_langs: "Idiomas enseñados",
+    stat_reviews: "Reseñas de 5 estrellas", stat_rating: "Calificación First Tutors",
+    about_label: "Sobre mí", about_heading: "Pasión por los idiomas. Don para la enseñanza.",
+    about_p1: "Soy hablante nativa de francés y profesora cualificada Advanced Skills Teacher con más de 15 años de experiencia en institutos londinenses. También he formado a docentes para enseñar francés, español y alemán — y hablo 5 idiomas con fluidez.",
+    about_p2: "Como ex-examinadora de una de las principales juntas de exámenes de Inglaterra, aporto una perspectiva única sobre lo que los evaluadores buscan. Mis alumnos progresan rápidamente desde la primera clase.",
+    about_p3: "Utilizo un método de enseñanza revolucionario que desmitifica los idiomas. Si no está satisfecho/a con su progreso en la primera clase, le reembolso el coste íntegramente.",
+    about_p4: "Cada aprendiz es diferente, y adapto cada sesión al individuo — algo que un aula simplemente no puede ofrecer.",
+    lang_label: "Qué enseño", lang_heading: "Cuatro idiomas, una profesora excepcional",
+    levels_all: "ESO · Bachillerato · GCSE · IGCSE · IB · A-Level · Universidad",
+    levels_gcse: "ESO · Bachillerato · GCSE · A-Level",
+    levels_conversational: "Todos los niveles · Conversación · Negocios",
+    fr_desc: "Como hablante nativa con experiencia como examinadora, Véronique da a sus alumnos una ventaja decisiva — logran regularmente las mejores notas.",
+    de_desc: "La gramática alemana se desmitifica mediante un enfoque estructurado y lógico que genera confianza rápidamente.",
+    es_desc: "El español cobra vida a través de la inmersión cultural y técnicas orientadas a los exámenes.",
+    pt_desc: "Desde el portugués europeo hasta los matices brasileños, Véronique adapta las clases a sus objetivos específicos.",
+    how_label: "El camino", how_heading: "Tres pasos hacia la fluidez",
+    step1_title: "Clase de prueba gratuita", step1_desc: "Comenzamos con una sesión gratuita de 60 minutos para evaluar su nivel y descubrir el método único de Véronique — sin ningún riesgo.",
+    step2_title: "Su plan personalizado", step2_desc: "Basándose en su nivel y estilo de aprendizaje, Véronique elabora un plan de estudio a medida con hitos claros.",
+    step3_title: "Sesiones semanales de progreso", step3_desc: "Clases individuales regulares, retroalimentación detallada, recursos seleccionados y seguimiento constante del progreso.",
+    testi_label: "Reseñas de alumnos", testi_heading: "Lo que dicen las familias",
+    testi_detail_gcse: "Padre/Madre · GCSE Francés y Español",
+    testi_detail_alevel: "Padre/Madre · A-Level Francés",
+    testi_detail_primary: "Padre/Madre · Primaria y GCSE Francés",
+    price_label: "Inversión", price_heading: "Precios transparentes",
+    price_sub: "Todas las clases duran 60 minutos. La primera clase de prueba es gratuita.",
+    tier1_name: "Primaria y Secundaria", tier2_name: "GCSE e IGCSE",
+    tier3_name: "IB y A-Level", tier4_name: "Universidad y Adultos",
+    per_lesson: "por clase", most_popular: "Más popular",
+    pf_online: "En línea vía Zoom o Teams", pf_resources: "Materiales de aprendizaje seleccionados",
+    pf_progress: "Informes de progreso", pf_flexible: "Horario flexible",
+    pf_exam: "Experiencia en exámenes (AQA, Edexcel)", pf_grade9: "Programa orientado a Nota 9",
+    pf_mock: "Exámenes de práctica", pf_speaking: "Preparación oral",
+    pf_ib: "Especialista IB y A-Level", pf_lit: "Literatura y redacción",
+    pf_oral: "Preparación para el examen oral", pf_oxbridge: "Preparación MLAT / Oxbridge",
+    pf_uni: "Apoyo universitario", pf_business: "Idioma para negocios",
+    pf_conv: "Fluidez conversacional", pf_travel: "Viaje e instalación",
+    book_btn: "Reservar",
+    faq_label: "¿Tiene preguntas?", faq_heading: "Preguntas frecuentes",
+    faq1_q: "¿Cómo funcionan las clases en línea técnicamente?",
+    faq1_a: "Las clases se imparten a través de Zoom o Microsoft Teams — ambos gratuitos. Véronique comparte su pantalla y usted practica el habla con vídeo y audio.",
+    faq2_q: "¿Qué planes de estudio cubre?",
+    faq2_a: "Como ex-examinadora, Véronique domina AQA, Edexcel, OCR y WJEC para GCSE y A-Level, así como IGCSE (Cambridge) e IB.",
+    faq3_q: "¿Qué tan rápido progresará mi hijo/a?",
+    faq3_a: "La mayoría de los alumnos notan una mejora significativa desde la primera clase. Si no está satisfecho, se reembolsa el coste íntegramente.",
+    faq4_q: "¿Qué edades y niveles enseña?",
+    faq4_a: "Desde niños de primaria (a partir de 3.º de primaria) hasta universitarios y adultos.",
+    faq5_q: "¿Cuándo están disponibles las clases?",
+    faq5_a: "Las clases están disponibles entre semana y los fines de semana, a cualquier hora — mañana, tarde y noche.",
+    faq6_q: "¿Puedo aprender portugués si ya hablo español?",
+    faq6_a: "¡Por supuesto! El español y el portugués comparten alrededor del 89 % de similitud léxica.",
+    contact_label: "Ponerse en contacto", contact_heading: "Comience su viaje lingüístico",
+    contact_sub: "Reserve su clase de prueba gratuita hoy. Sin compromiso. Sin riesgo.",
+    contact_details: "Datos de contacto",
+    form_name: "Su nombre", form_email: "Correo electrónico", form_language: "Idioma de interés",
+    form_level: "Nivel actual / Examen", form_message: "Mensaje (opcional)",
+    form_select: "Seleccionar idioma…", form_select_level: "Seleccionar nivel…",
+    form_multi: "Varios idiomas", form_adult: "Adulto / Aprendiz casual",
+    form_submit: "Enviar y reservar clase de prueba",
+    email_label: "Correo", location_label: "Ubicación", location_val: "Londres, RU · En línea en todo el mundo",
+    avail_label: "Disponibilidad", avail_val: "Semana y fin de semana · A toda hora",
+    rating_label: "Calificación First Tutors",
+    guarantee: '"Si no está satisfecho/a con el progreso en su primera clase, le reembolso el coste íntegramente."',
+    footer_bio: "Profesora de idiomas en línea con sede en Londres. Hablante nativa de francés. Cualificada PGCE. Ex-examinadora. Enseña francés, alemán, español y portugués desde 2010.",
+    footer_langs_title: "Idiomas",
+    footer_copy: "© 2026 Véronique Pimentel. Todos los derechos reservados."
+  },
+  pt: {
+    nav_about: "Sobre mim", nav_languages: "Idiomas", nav_how: "Como funciona",
+    nav_pricing: "Preços", nav_faq: "FAQ", nav_contact: "Contacto", nav_book: "Aula experimental",
+    hero_pretitle: "Professora de idiomas online · Londres",
+    hero_name: "Véronique", hero_tagline: "Domine 4 idiomas. Uma só professora. Ao seu ritmo.",
+    hero_cta1: "Reservar aula experimental gratuita", hero_cta2: "Descobrir o meu método",
+    stat_years: "Anos de experiência", stat_langs: "Idiomas ensinados",
+    stat_reviews: "Avaliações 5 estrelas", stat_rating: "Classificação First Tutors",
+    about_label: "Sobre mim", about_heading: "Uma paixão por idiomas. Um dom para ensinar.",
+    about_p1: "Sou falante nativa de francês e professora qualificada Advanced Skills Teacher com mais de 15 anos de experiência em escolas secundárias de Londres. Também formei professores para ensinar francês, espanhol e alemão — e falo 5 idiomas fluentemente.",
+    about_p2: "Como ex-examinadora de uma das principais organizações de exames de Inglaterra, trago uma perspetiva única sobre o que os avaliadores procuram. Os meus alunos progridem rapidamente desde a primeira aula.",
+    about_p3: "Utilizo um método de ensino revolucionário que desmistifica os idiomas. Se não estiver satisfeito/a com o seu progresso na primeira aula, reembolso o custo na íntegra.",
+    about_p4: "Cada aprendiz é diferente, e adapto cada sessão ao indivíduo — algo que uma sala de aula simplesmente não consegue oferecer.",
+    lang_label: "O que ensino", lang_heading: "Quatro idiomas, uma professora excecional",
+    levels_all: "Básico · Secundário · GCSE · IGCSE · IB · A-Level · Universidade",
+    levels_gcse: "Básico · Secundário · GCSE · A-Level",
+    levels_conversational: "Todos os níveis · Conversação · Negócios",
+    fr_desc: "Como falante nativa com experiência de examinadora, Véronique dá aos alunos uma vantagem decisiva — obtêm regularmente as melhores notas.",
+    de_desc: "A gramática alemã é desmistificada através de uma abordagem estruturada e lógica que constrói confiança rapidamente.",
+    es_desc: "O espanhol ganha vida através da imersão cultural e técnicas orientadas para os exames.",
+    pt_desc: "Do português europeu às nuances brasileiras, Véronique adapta as aulas aos seus objetivos específicos.",
+    how_label: "O percurso", how_heading: "Três passos para a fluência",
+    step1_title: "Aula experimental gratuita", step1_desc: "Começamos com uma sessão gratuita de 60 minutos para avaliar o seu nível e descobrir o método único de Véronique — sem qualquer risco.",
+    step2_title: "O seu plano personalizado", step2_desc: "Com base no seu nível e estilo de aprendizagem, Véronique elabora um plano de estudo personalizado com marcos claros.",
+    step3_title: "Sessões semanais de progresso", step3_desc: "Aulas individuais regulares, feedback detalhado, recursos selecionados e monitorização constante do progresso.",
+    testi_label: "Avaliações de alunos", testi_heading: "O que as famílias dizem",
+    testi_detail_gcse: "Pai/Mãe · GCSE Francês e Espanhol",
+    testi_detail_alevel: "Pai/Mãe · A-Level Francês",
+    testi_detail_primary: "Pai/Mãe · Primária e GCSE Francês",
+    price_label: "Investimento", price_heading: "Preços transparentes",
+    price_sub: "Todas as aulas têm 60 minutos. A primeira aula experimental é gratuita.",
+    tier1_name: "Primária e Secundária", tier2_name: "GCSE e IGCSE",
+    tier3_name: "IB e A-Level", tier4_name: "Universidade e Adultos",
+    per_lesson: "por aula", most_popular: "Mais popular",
+    pf_online: "Online via Zoom ou Teams", pf_resources: "Materiais de aprendizagem selecionados",
+    pf_progress: "Relatórios de progresso", pf_flexible: "Horário flexível",
+    pf_exam: "Conhecimento de exames (AQA, Edexcel)", pf_grade9: "Programa orientado para Nota 9",
+    pf_mock: "Exames de prática", pf_speaking: "Treino de expressão oral",
+    pf_ib: "Especialista IB e A-Level", pf_lit: "Literatura e redação",
+    pf_oral: "Preparação para o exame oral", pf_oxbridge: "Preparação MLAT / Oxbridge",
+    pf_uni: "Apoio universitário", pf_business: "Idioma para negócios",
+    pf_conv: "Fluência conversacional", pf_travel: "Viagem e relocalização",
+    book_btn: "Reservar",
+    faq_label: "Tem perguntas?", faq_heading: "Perguntas frequentes",
+    faq1_q: "Como funcionam as aulas online tecnicamente?",
+    faq1_a: "As aulas são dadas via Zoom ou Microsoft Teams — ambos gratuitos. Véronique partilha o ecrã e você pratica a fala com vídeo e áudio.",
+    faq2_q: "Que programas de exame cobre?",
+    faq2_a: "Como ex-examinadora, Véronique domina AQA, Edexcel, OCR e WJEC para GCSE e A-Level, bem como IGCSE (Cambridge) e IB.",
+    faq3_q: "Com que rapidez o meu filho/a irá progredir?",
+    faq3_a: "A maioria dos alunos nota uma melhoria significativa desde a primeira aula. Se não estiver satisfeito/a, o custo é reembolsado na íntegra.",
+    faq4_q: "Que idades e níveis ensina?",
+    faq4_a: "De crianças do ensino primário (a partir do 3.º ano) até estudantes universitários e adultos.",
+    faq5_q: "Quando estão disponíveis as aulas?",
+    faq5_a: "As aulas estão disponíveis durante a semana e ao fim de semana, a qualquer hora — manhã, tarde e noite.",
+    faq6_q: "Posso aprender português se já falo espanhol?",
+    faq6_a: "Com certeza! O espanhol e o português partilham cerca de 89% de similaridade lexical.",
+    contact_label: "Entrar em contacto", contact_heading: "Comece a sua jornada linguística",
+    contact_sub: "Reserve a sua aula experimental gratuita hoje. Sem compromisso. Sem risco.",
+    contact_details: "Dados de contacto",
+    form_name: "O seu nome", form_email: "Endereço de e-mail", form_language: "Idioma de interesse",
+    form_level: "Nível atual / Exame", form_message: "Mensagem (opcional)",
+    form_select: "Selecionar idioma…", form_select_level: "Selecionar nível…",
+    form_multi: "Vários idiomas", form_adult: "Adulto / Aprendiz casual",
+    form_submit: "Enviar mensagem e reservar aula experimental",
+    email_label: "E-mail", location_label: "Localização", location_val: "Londres, RU · Online em todo o mundo",
+    avail_label: "Disponibilidade", avail_val: "Dias úteis e fim de semana · A qualquer hora",
+    rating_label: "Classificação First Tutors",
+    guarantee: '"Se não estiver satisfeito/a com o progresso na sua primeira aula, reembolso o custo na íntegra."',
+    footer_bio: "Professora de idiomas online baseada em Londres. Falante nativa de francês. Qualificada PGCE. Ex-examinadora. A ensinar francês, alemão, espanhol e português desde 2010.",
+    footer_langs_title: "Idiomas",
+    footer_copy: "© 2026 Véronique Pimentel. Todos os direitos reservados."
+  }
+};
+
+// ── APPLY TRANSLATIONS ────────────────────────────────────────────────
+let currentLang = 'en';
+function applyLang(lang) {
+  currentLang = lang;
+  const t = i18n[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) el.textContent = t[key];
+  });
+  document.documentElement.lang = lang;
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    const active = btn.dataset.lang === lang;
+    btn.classList.toggle('active', active);
+    btn.setAttribute('aria-pressed', active);
+  });
+}
+
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => applyLang(btn.dataset.lang));
+});
+
+// ── HAMBURGER MENU ────────────────────────────────────────────────────
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => {
+  const open = mobileMenu.classList.toggle('open');
+  hamburger.setAttribute('aria-expanded', open);
+});
+mobileMenu.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+  });
+});
+
+// ── SCROLL REVEAL ─────────────────────────────────────────────────────
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ── FAQ ACCORDION ─────────────────────────────────────────────────────
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(open => {
+      open.classList.remove('open');
+      open.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  });
+});
+
+// ── NAV SCROLL SHADOW ─────────────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  document.querySelector('nav').style.boxShadow =
+    window.scrollY > 10 ? '0 2px 20px rgba(0,0,0,0.3)' : 'none';
+}, { passive: true });
+</script>
+</body>
+</html>
